@@ -1,34 +1,15 @@
 const express = require('express');
-const fileupload = require('express-fileupload');
 const cors = require('cors');
-// const multer = require('multer');
 const TelegramBot = require('node-telegram-bot-api');
 require('dotenv').config();
 
+const { notifyRoutes } = require('./routes/notifyRoute');
 const app = express();
 
-app.use(
-  fileupload({
-    createParentPath: true,
-  })
-);
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-// const storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, './uploads');
-//   },
-//   filename: function (req, file, cb) {
-//     cb(
-//       null,
-//       file.fieldname + '-' + Date.now() + path.extname(file.originalname)
-//     );
-//   },
-// });
-
-// const upload = multer({ storage: storage });
+app.use('/', notifyRoutes);
 
 const PORT = process.env.PORT || 3000;
 const token = process.env.TOKEN;
@@ -48,47 +29,6 @@ bot.on('message', async msg => {
     });
   }
 });
-
-app.get('/', function (req, res) {
-  res.send('Hello World');
-});
-
-app.post('/onefile', function (req, res) {
-  console.log('req.files ===== >>>> ', req.files);
-  try {
-    if (!req.files) {
-      return res.json({
-        status: 'failed',
-        message: 'No file',
-      });
-    }
-
-    let file = req.files.file;
-    console.log('req.files', req.files);
-    file.mv('./uploads/' + file.name);
-
-    res.send({
-      status: 'success',
-      message: 'File successfully uploaded',
-      data: {
-        name: file.name,
-        mimetype: file.mimetype,
-        size: file.size,
-      },
-    });
-  } catch (err) {
-    res.status(500).send(err);
-  }
-});
-
-// const uploadMultiple = upload.fields([{ name: 'file1' }]);
-
-// app.post('/files', uploadMultiple, function (req, res, next) {
-//   if (req.files) {
-//     console.log(req.files);
-//     console.log('files uploaded');
-//   }
-// });
 
 app.listen(PORT, function () {
   console.log(`Server running. Use http://localhost:${PORT}/`);
