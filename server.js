@@ -1,34 +1,34 @@
 const express = require('express');
 const fileupload = require('express-fileupload');
 const cors = require('cors');
-const multer = require('multer');
+// const multer = require('multer');
 const TelegramBot = require('node-telegram-bot-api');
 require('dotenv').config();
 
 const app = express();
-app.use(express.json());
+
 app.use(
   fileupload({
     createParentPath: true,
   })
 );
-app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, './uploads');
+//   },
+//   filename: function (req, file, cb) {
+//     cb(
+//       null,
+//       file.fieldname + '-' + Date.now() + path.extname(file.originalname)
+//     );
+//   },
+// });
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, './uploads');
-  },
-  filename: function (req, file, cb) {
-    cb(
-      null,
-      file.fieldname + '-' + Date.now() + path.extname(file.originalname)
-    );
-  },
-});
-
-const upload = multer({ storage: storage });
+// const upload = multer({ storage: storage });
 
 const PORT = process.env.PORT || 3000;
 const token = process.env.TOKEN;
@@ -53,8 +53,7 @@ app.get('/', function (req, res) {
   res.send('Hello World');
 });
 
-app.post('/notify', function (req, res) {
-  console.log('req.body ===== >>>> ', req.body);
+app.post('/onefile', function (req, res) {
   console.log('req.files ===== >>>> ', req.files);
   try {
     if (!req.files) {
@@ -80,29 +79,16 @@ app.post('/notify', function (req, res) {
   } catch (err) {
     res.status(500).send(err);
   }
-  // res.json({
-  //   status: 'Success',
-  //   code: 200,
-  //   data: { ...req.body },
-  // });
 });
 
+// const uploadMultiple = upload.fields([{ name: 'file1' }]);
 
-
-
-const uploadMultiple = upload.fields([{ name: 'file1' }]);
-
-app.post('/files', uploadMultiple, function (req, res, next) {
-  if (req.files) {
-    console.log(req.files);
-    console.log('files uploaded');
-  }
-});
-
-
-
-
-
+// app.post('/files', uploadMultiple, function (req, res, next) {
+//   if (req.files) {
+//     console.log(req.files);
+//     console.log('files uploaded');
+//   }
+// });
 
 app.listen(PORT, function () {
   console.log(`Server running. Use http://localhost:${PORT}/`);
