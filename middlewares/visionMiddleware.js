@@ -5,18 +5,27 @@ const vision = require('@google-cloud/vision');
 const client = new vision.ImageAnnotatorClient({
   keyFilename: '../node/routes/vision-project-key.json',
 });
+const { forbiddenValues } = require('../services/forbiddenValues');
 
 const visionCheck = async (
   imagePath,
   { safe: safety, label: description, langSafe }
 ) => {
-  let safe, label;
+  console.log('imagePath', imagePath);
+  let safe,
+    label,
+    isPermitted = false,
+    isPermittedSafe,
+    isPermittedLabel;
 
   try {
     if (description) {
       const [labels] = await client.labelDetection(imagePath);
       const arrayLabels = labels.labelAnnotations;
+
       label = arrayLabels.map(item => item.description);
+
+      isPermittedLabel = forbiddenValues.some(item => label.includes(item));
     }
   } catch (error) {
     return error.message;
@@ -25,13 +34,16 @@ const visionCheck = async (
   try {
     if (safety) {
       const [result] = await client.safeSearchDetection(
-          imagePath
+        imagePath
         //   'https://firebasestorage.googleapis.com/v0/b/telegram-bot-d339c.appspot.com/o/photo%2Fjune%2F1687848306874-girl-avatar.jpg?alt=media&token=01ee4688-cb50-406b-be07-282c9cb6eef2'
         // '../node/uploads/1687845345797 - girl-avatar.jpg'
         // '../node/uploads/porno.png'
       );
 
       const detections = result.safeSearchAnnotation;
+
+      const safeValues = Object.values(detections);
+      isPermittedSafe = forbiddenValues.some(item => safeValues.includes(item));
 
       if (langSafe === 'ua') {
         safe = {
@@ -55,8 +67,13 @@ const visionCheck = async (
     return error.message;
   }
 
+  isPermitted = [isPermittedSafe, isPermittedLabel].includes(true);
+
   return {
-    imagePath,
+    // imagePath,
+    // isPermittedSafe,
+    // isPermittedLabel,
+    isPermitted: !isPermitted,
     safe,
     label,
   };
@@ -96,20 +113,3 @@ const translate = value => {
 module.exports = {
   visionCheck,
 };
-
-// UNLIKELY	Це малоймовірно.
-// POSSIBLE	Можливо.
-// LIKELY	Це ймовірно.
-// VERY_LIKELY	Це дуже ймовірно.
-// VERY_UNLIKELY	Це дуже малоймовірно.
-// UNKNOWN	Невідома ймовірність.
-
-// "Grass": «Трава»
-// "Herb": "Трава"
-// "Plant": "Рослина"
-// "Hemp family": «Конопельна родина»
-
-// "Chemical compound": «Хімічна сполука»
-// "Bread flour": «Хлібне борошно»
-// "All-purpose flour" : «Борошно універсальне»
-// "Sea salt" : "Морська сіль"

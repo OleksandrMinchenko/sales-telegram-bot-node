@@ -13,6 +13,15 @@ const upload = multer({
   storage: multerConfig,
 });
 
+const multerErrorHandling = (err, req, res, next) => {
+  if (err instanceof multer.MulterError) {
+    res.status(400).send('Multer error: ' + err.message);
+  } else {
+    next();
+  }
+};
+
 module.exports = {
   upload,
+  multerErrorHandling,
 };
