@@ -19,4 +19,16 @@
 - https://stackoverflow.com/questions/62907838/telegram-bot-sendmediagroup-in-postman-json-serialized-array
 
 # How to send telegram mediaGroup with caption/text
+
 - https://stackoverflow.com/questions/58893142/how-to-send-telegram-mediagroup-with-caption-text
+
+# How deploy to google cloud
+
+- [article](https://levelup.gitconnected.com/how-to-deploy-your-node-js-app-with-google-2cd3771d5b21)
+- [video](https://www.youtube.com/watch?v=HgpCjChgjoQ&ab_channel=DavidWeiss)
+- [install phyton](https://www.python.org/downloads/macos/)
+- [instal google cloud sdk](https://cloud.google.com/sdk/docs/install-sdk)
+- [add config file - app.yaml](https://cloud.google.com/appengine/docs/flexible/reference/app-yaml?hl=en&tab=python)
+- `runtime: nodejs16`
+- send code to google side: `gcloud app deploy`
+- check script in package.json:  `"start": "node server.js"`

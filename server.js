@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const TelegramBot = require('node-telegram-bot-api');
 require('dotenv').config();
 
@@ -11,8 +12,19 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/', notifyRoutes);
 
-const PORT = process.env.PORT || 3000;
-const token = process.env.TOKEN;
+app.use('/', (req, res) => {
+  const pathToHomePage = path.join(
+    __dirname,
+    'index.html'
+  );
+  res.sendFile(pathToHomePage);
+});
+
+// const PORT = process.env.PORT || 3000;
+// const token = process.env.TOKEN;
+
+const PORT = 8000;
+const token = '5908975178:AAEvZQ41d5r7tGFgRI0DHDDocCbBhtP90Gk';
 const url = 'https://smisyuk4.github.io/sales-telegram-bot-react/';
 
 const bot = new TelegramBot(token, { polling: true });
