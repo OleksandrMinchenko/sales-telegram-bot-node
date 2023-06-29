@@ -11,7 +11,7 @@ const checkContentSomePhotos = async (req, res) => {
     const path = `../node/uploads/${item.filename}`;
     arrayPath.push(path);
 
-    const res = visionCheck(path, {
+    const res = visionCheck(path, item, {
       safe: true,
       label: true,
       // langSafe: 'ua',
@@ -21,7 +21,7 @@ const checkContentSomePhotos = async (req, res) => {
   });
 
   const resultCheck = await Promise.all(unresolvedPromises);
-
+  console.log(resultCheck);
   // remove photos
   arrayPath.map(item => {
     fs.unlink(item, error => {
@@ -33,7 +33,6 @@ const checkContentSomePhotos = async (req, res) => {
 
   res.send({
     status: 'success',
-    myPhotos: { ...req.files },
     resultCheck,
   });
 };
@@ -42,11 +41,15 @@ const checkContentSomePhotos = async (req, res) => {
 const checkContentOnePhoto = async (req, res) => {
   const { photoUrl } = req.body;
 
-  const result = await visionCheck(photoUrl, {
-    safe: true,
-    label: true,
-    langSafe: 'ua',
-  });
+  const result = await visionCheck(
+    photoUrl,
+    {},
+    {
+      safe: true,
+      label: true,
+      langSafe: 'ua',
+    }
+  );
 
   res.send({
     status: 'success',

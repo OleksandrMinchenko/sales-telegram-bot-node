@@ -9,9 +9,12 @@ const { forbiddenValues } = require('../services/forbiddenValues');
 
 const visionCheck = async (
   imagePath,
+  file,
   { safe: safety, label: description, langSafe }
 ) => {
   console.log('imagePath', imagePath);
+  console.log('file', file);
+
   let safe,
     label,
     isPermitted = false,
@@ -24,7 +27,6 @@ const visionCheck = async (
       const arrayLabels = labels.labelAnnotations;
 
       label = arrayLabels.map(item => item.description);
-
       isPermittedLabel = forbiddenValues.some(item => label.includes(item));
     }
   } catch (error) {
@@ -70,9 +72,7 @@ const visionCheck = async (
   isPermitted = [isPermittedSafe, isPermittedLabel].includes(true);
 
   return {
-    // imagePath,
-    // isPermittedSafe,
-    // isPermittedLabel,
+    file,
     isPermitted: !isPermitted,
     safe,
     label,
