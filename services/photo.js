@@ -5,8 +5,10 @@ const path = require('path');
 // form-data
 const checkContentSomePhotos = async (req, res) => {
   const arrayPhotos = req.files;
+  console.log('arrayPhotos ', arrayPhotos);
 
   let arrayPath = [];
+  console.log('before unresolvedPromises ============>');
 
   const unresolvedPromises = arrayPhotos.map(item => {
     // const path = path.join('uploads', item.filename);
@@ -25,6 +27,7 @@ const checkContentSomePhotos = async (req, res) => {
     return res;
   });
 
+  console.log('before resultCheck ============>');
   const resultCheck = await Promise.all(unresolvedPromises);
   console.log(resultCheck);
   // remove photos

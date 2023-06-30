@@ -2,8 +2,9 @@ runtime: nodejs16
 
 env_variables:
   PORT: '8080'
-  TOKEN: '5908975178:AAEvZQ41d5r7tGFgRI0DHDDocCbBhtP90Gk'
-  URL_FORM: 'https://smisyuk4.github.io/sales-telegram-bot-react/'
+  TOKEN: '6062294358:AAEx41LVkhDf3cOiCHc38IAYzPClKsCfdfE'
+  URL_REACT: 'https://smisyuk4.github.io/sales-telegram-bot-react/'
+  URL_NODE: 'https://telegram-bot-d339c.ew.r.appspot.com/'
 
   TYPE: 'service_account'
   PROJECT_ID: 'telegram-bot-d339c'
