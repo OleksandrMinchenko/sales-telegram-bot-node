@@ -13,19 +13,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/', notifyRoutes);
 
 app.use('/', (req, res) => {
-  const pathToHomePage = path.join(
-    __dirname,
-    'index.html'
-  );
+  const pathToHomePage = path.join(__dirname, 'index.html');
   res.sendFile(pathToHomePage);
 });
 
-// const PORT = process.env.PORT || 3000;
-// const token = process.env.TOKEN;
+const PORT = process.env.PORT || 3000;
+const token = process.env.TOKEN;
 
-const PORT = 8000;
-const token = '5908975178:AAEvZQ41d5r7tGFgRI0DHDDocCbBhtP90Gk';
-const url = 'https://smisyuk4.github.io/sales-telegram-bot-react/';
+const url = process.env.URL_FORM;
 
 const bot = new TelegramBot(token, { polling: true });
 
@@ -42,6 +37,6 @@ bot.on('message', async msg => {
   }
 });
 
-app.listen(PORT, function () {
-  console.log(`Server running. Use http://localhost:${PORT}/`);
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}/`);
 });

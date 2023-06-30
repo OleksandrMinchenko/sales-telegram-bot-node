@@ -1,5 +1,6 @@
 const { visionCheck } = require('../middlewares/visionMiddleware');
 const fs = require('fs').promises;
+const path = require('path');
 
 // form-data
 const checkContentSomePhotos = async (req, res) => {
@@ -8,7 +9,11 @@ const checkContentSomePhotos = async (req, res) => {
   let arrayPath = [];
 
   const unresolvedPromises = arrayPhotos.map(item => {
-    const path = `../node/uploads/${item.filename}`;
+    // const path = path.join('uploads', item.filename);
+    const path = path.join(__dirname, 'uploads', item.filename);
+    console.log('item.filename ============>', item.filename);
+    console.log('__dirname ============>', __dirname);
+    console.log('path ============>', path);
     arrayPath.push(path);
 
     const res = visionCheck(path, item, {
