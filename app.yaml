@@ -1,10 +1,21 @@
 runtime: nodejs16
 
+api_version: 1
+threadsafe: true
+handlers:
+  - url: /
+    static_files: build/index.html
+    upload: build/index.html
+    expiration: 1s
+  - url: /(.*)
+    static_files: build/\1
+    upload: build/(.*)
+
 env_variables:
   PORT: '8080'
   TOKEN: '6062294358:AAEx41LVkhDf3cOiCHc38IAYzPClKsCfdfE'
-  URL_REACT: 'https://smisyuk4.github.io/sales-telegram-bot-react/'
-  URL_NODE: 'https://telegram-bot-d339c.ew.r.appspot.com/'
+  URL_REACT: 'https://smisyuk4.github.io/sales-telegram-bot-react'
+  URL_NODE: 'https://telegram-bot-d339c.ew.r.appspot.com'
 
   TYPE: 'service_account'
   PROJECT_ID: 'telegram-bot-d339c'
