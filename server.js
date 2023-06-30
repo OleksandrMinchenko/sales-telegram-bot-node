@@ -22,22 +22,34 @@ const token = process.env.TOKEN;
 const urlNode = process.env.URL_NODE;
 const urlReact = process.env.URL_REACT;
 
+const bot = new TelegramBot(token); // { webHook: { port: process.env.PORT } }
 
-const bot = new TelegramBot(token, { polling: true });
 bot.setWebHook(`${urlNode}/bot${token}`);
 
-bot.on('message', async msg => {
-  bot.sendMessage(msg.chat.id, 'I am alive!');
-  // const chatId = msg.chat.id;
-  // const text = msg.text;
+app.post(`/bot${token}`, (req, res) => {
+  bot.processUpdate(req.body);
+  res.sendStatus(200);
+});
 
-  // if (text === '/start') {
-  //   await bot.sendMessage(chatId, 'Заповни форму', {
-  //     reply_markup: {
-  //       inline_keyboard: [[{ text: 'order', web_app: { urlReact } }]],
-  //     },
-  //   });
-  // }
+bot.on('message', async msg => {
+  const chatId = msg.chat.id;
+  const text = msg.text;
+
+  if (text === '/start') {
+    await bot.sendMessage(chatId, 'Заповни форму', {
+      reply_markup: {
+        inline_keyboard: [[{ text: 'order', web_app: { urlReact } }]],
+      },
+    });
+  }
+});
+
+bot.on('polling_error', error => {
+  console.log('bot_polling_error', error.message);
+});
+
+bot.on('webhook_error', error => {
+  console.log('bot_webhook_error', error.message);
 });
 
 app.listen(PORT, () => {
