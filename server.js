@@ -31,14 +31,7 @@ bot.on('message', async msg => {
   const text = msg.text;
   console.log('message bot===>', 'я тут');
 
-  // bot.sendMessage(chatId, `я тут ${chatId}`);
   if (text === '/start') {
-    // await bot.sendMessage(chatId, 'форма', {
-    //   reply_markup: {
-    //     keyboard: [[{ text: 'Відкрити форму', web_app: { url: urlReact }  }]],
-    //   },
-    // });
-
     await bot.sendMessage(chatId, 'Відправити оголошення', {
       reply_markup: {
         inline_keyboard: [
@@ -48,19 +41,22 @@ bot.on('message', async msg => {
     });
   }
 
-  if (msg?.web_app_data?.data) {
-    try {
-      const data = JSON.parse(msg?.web_app_data?.data);
+  // console.log('before check data ===>');
 
-      await bot.sendMessage(chatId, 'Дякуємо');
+  // if (msg?.web_app_data?.data) {
+  //   try {
+  //     await bot.sendMessage(chatId, 'Дякуємо');
+  //     const data = msg.web_app_data.data;
 
-      const notify = `${data?.title}, ${data?.description}, ${data?.cost}, ${data?.contact}`;
+  //     console.log('data =====>', data);
+  //     const formData = JSON.parse(data);
+  //     const notify = `${formData?.title}, ${formData?.description}, ${formData?.cost}, ${formData?.contact}`;
 
-      await bot.sendMessage(chatId, notify);
-    } catch (error) {
-      console.log('msg?.web_app_data?.data ===>', error);
-    }
-  }
+  //     await bot.sendMessage(chatId, notify);
+  //   } catch (error) {
+  //     console.log('msg?.web_app_data?.data ===>', error);
+  //   }
+  // }
 });
 
 bot.on('polling_error', error => {
@@ -69,6 +65,36 @@ bot.on('polling_error', error => {
 
 bot.on('webhook_error', error => {
   console.log('bot_webhook_error', error.message);
+});
+
+app.post('/web-data', async (req, res) => {
+  const { title, description, cost, contact, queryId } = req.body;
+
+  try {
+    await bot.answerWebAppQuery(queryId, {
+      type: 'article',
+      id: queryId,
+      title: 'Дякуємо',
+      input_message_content: {
+        message_text: `${title}, ${description}, ${cost}, ${contact}`,
+      }, //Text of the message to be sent, 1-4096 characters
+    });
+
+    res.status(200).send({});
+  } catch (error) {
+    console.log('/web-data bot.answerWebAppQuery ===>', error);
+
+    await bot.answerWebAppQuery(queryId, {
+      type: 'article',
+      id: queryId,
+      title: 'Не вийшло відправити замовлення',
+      input_message_content: {
+        message_text: 'Не вийшло відправити замовлення',
+      },
+    });
+    
+    res.status(500).send({});
+  }
 });
 
 // =============== bot
