@@ -33,7 +33,6 @@ bot.on('message', async msg => {
 
   // bot.sendMessage(chatId, `я тут ${chatId}`);
   if (text === '/start') {
-
     // await bot.sendMessage(chatId, 'форма', {
     //   reply_markup: {
     //     keyboard: [[{ text: 'Відкрити форму', web_app: { url: urlReact }  }]],
@@ -47,6 +46,20 @@ bot.on('message', async msg => {
         ],
       },
     });
+  }
+
+  if (msg?.web_app_data?.data) {
+    try {
+      const data = JSON.parse(msg?.web_app_data?.data);
+
+      await bot.sendMessage(chatId, 'Дякуємо');
+
+      const notify = `${data?.title}, ${data?.description}, ${data?.cost}, ${data?.contact}`;
+
+      await bot.sendMessage(chatId, notify);
+    } catch (error) {
+      console.log('msg?.web_app_data?.data ===>', error);
+    }
   }
 });
 
