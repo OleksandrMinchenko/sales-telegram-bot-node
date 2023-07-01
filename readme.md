@@ -6,6 +6,9 @@
 - [Marvin's Marvellous Guide to All Things Webhook](https://core.telegram.org/bots/webhooks)
 - [listen multiple bot](https://github.com/yagop/node-telegram-bot-api/issues/446)
 
+- [bots/webapps](https://core.telegram.org/api/bots/webapps)
+- [bots/payments](https://core.telegram.org/bots/payments)
+
 - перевірити наявність сертифікату у свого бота
 - `https://api.telegram.org/bot_____my_token_____/getWebhookInfo`
 - [no](https://i.ibb.co/7xfv0gZ/2023-07-01-02-54-50.png)

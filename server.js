@@ -5,17 +5,13 @@ const TelegramBot = require('node-telegram-bot-api');
 require('dotenv').config();
 
 const { notifyRoutes } = require('./routes/notifyRoute');
-// const { myBot } = require('./middlewares/telegramBot');
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-// app.use(myBot);
 
 // =============== bot
-// =============== bot
-
 const token = process.env.TOKEN;
 const urlReact = process.env.URL_REACT;
 const urlNode = process.env.URL_NODE;
@@ -35,14 +31,23 @@ bot.on('message', async msg => {
   const text = msg.text;
   console.log('message bot===>', 'я тут');
 
-  bot.sendMessage(chatId, `я тут ${chatId}`);
-  // if (text === '/start') {
-  //   await bot.sendMessage(chatId, 'Заповни форму', {
-  //     reply_markup: {
-  //       inline_keyboard: [[{ text: 'order', web_app: { urlReact } }]],
-  //     },
-  //   });
-  // }
+  // bot.sendMessage(chatId, `я тут ${chatId}`);
+  if (text === '/start') {
+
+    // await bot.sendMessage(chatId, 'форма', {
+    //   reply_markup: {
+    //     keyboard: [[{ text: 'Відкрити форму', web_app: { url: urlReact }  }]],
+    //   },
+    // });
+
+    await bot.sendMessage(chatId, 'Відправити оголошення', {
+      reply_markup: {
+        inline_keyboard: [
+          [{ text: 'Заповнити форму', web_app: { url: urlReact } }],
+        ],
+      },
+    });
+  }
 });
 
 bot.on('polling_error', error => {
@@ -53,7 +58,6 @@ bot.on('webhook_error', error => {
   console.log('bot_webhook_error', error.message);
 });
 
-// =============== bot
 // =============== bot
 
 app.use('/', notifyRoutes);
