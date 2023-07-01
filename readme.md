@@ -6,7 +6,6 @@
 - [Marvin's Marvellous Guide to All Things Webhook](https://core.telegram.org/bots/webhooks)
 - [listen multiple bot](https://github.com/yagop/node-telegram-bot-api/issues/446)
 
-
 - перевірити наявність сертифікату у свого бота
 - `https://api.telegram.org/bot_____my_token_____/getWebhookInfo`
 - [no](https://i.ibb.co/7xfv0gZ/2023-07-01-02-54-50.png)
@@ -14,7 +13,6 @@
 - встановити сертифікат на свого бота
 - `https://api.telegram.org/bot_____my_token_____/setWebhook?url=_____my_site_deploy_____`
 - [set](https://i.ibb.co/QnCKLR3/2023-07-01-02-54-13.png)
-
 
 - https://www.npmjs.com/package/node-telegram-bot-api
 - https://www.npmjs.com/package/cors
@@ -54,6 +52,11 @@
 # Vision Api
 
 - [documentation](https://googleapis.dev/nodejs/vision/latest/v1.ImageAnnotatorClient.html)
+
+# multer and google cloud
+
+- [npm](https://github.com/arozar/multer-google-storage)
+- [storage-create-bucket-console](https://cloud.google.com/storage/docs/creating-buckets#storage-create-bucket-console)
 
 # deploy from github to coogle cloud
 
