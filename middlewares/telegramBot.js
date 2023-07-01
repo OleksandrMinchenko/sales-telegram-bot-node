@@ -5,8 +5,11 @@ const token = process.env.TOKEN;
 // const urlNode = process.env.URL_NODE;
 const urlReact = process.env.URL_REACT;
 
+console.log();
+
 const myBot = (req, res, next) => {
-  const bot = new TelegramBot(token); // { webHook: { port: process.env.PORT } }
+  console.log('myBot work ===========> ');
+  const bot = new TelegramBot(token, { polling: true }); // { webHook: { port: process.env.PORT } }
 
   // bot.setWebHook(`${urlNode}/bot${token}`);
 
@@ -19,7 +22,7 @@ const myBot = (req, res, next) => {
     const chatId = msg.chat.id;
     const text = msg.text;
 
-    bot.sendMessage('я тут');
+    bot.sendMessage(chatId, 'я тут');
     // if (text === '/start') {
     //   await bot.sendMessage(chatId, 'Заповни форму', {
     //     reply_markup: {

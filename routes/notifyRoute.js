@@ -23,12 +23,12 @@ router.post('/check-one-photo', checkContentOnePhoto);
 //   checkContentSomePhotos
 // );
 
-router.post(
-  '/check-photos',
-  uploudGoogleCloud.array('photos', 5),
-  // multerErrorHandling,
-  checkContentSomePhotos
-);
+// router.post(
+//   '/check-photos',
+//   uploudGoogleCloud.array('photos', 5),
+//   // multerErrorHandling,
+//   checkContentSomePhotos
+// );
 
 // app.post('/upload', uploudGoogleCloud.any(), function (req, res) {
 //   console.log(req.files);
