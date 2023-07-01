@@ -43,7 +43,7 @@ bot.on('message', async msg => {
     await bot.sendMessage(chatId, 'Відправити оголошення', {
       reply_markup: {
         inline_keyboard: [
-          [{ text: 'Заповнити форму', web_app: { url: urlReact } }],
+          [{ text: 'Заповнити форму', web_app: { url: 'https://smisyuk4.github.io/react-practice-04-candy/' } }],
         ],
       },
     });
