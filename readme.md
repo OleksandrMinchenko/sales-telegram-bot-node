@@ -23,6 +23,9 @@
 - https://www.npmjs.com/package/nodemon
 - https://www.npmjs.com/package/dotenv
 
+# send message
+- [fomating text](https://core.telegram.org/bots/api#formatting-options)
+
 # send file
 
 - https://core.telegram.org/bots/api#sendphoto

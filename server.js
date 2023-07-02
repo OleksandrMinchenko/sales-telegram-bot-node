@@ -69,32 +69,89 @@ bot.on('webhook_error', error => {
 
 app.post('/web-data', async (req, res) => {
   const { title, description, cost, contact, queryId } = req.body;
+  // console.log('req.body =====> ', req?.body);
 
   try {
-    await bot.answerWebAppQuery(queryId, {
-      type: 'article',
-      id: queryId,
-      title: 'Дякуємо',
-      input_message_content: {
-        message_text: `${title}, ${description}, ${cost}, ${contact}`,
-      }, //Text of the message to be sent, 1-4096 characters
-    });
+    // await bot.sendMessage(
+    //   process.env.CHANNEL_ID,
+    //   `\*${title}* \n${description} \n${cost}грн \n${contact}`,
+    //   { parse_mode: 'MarkdownV2' } // or HTML
+    // );
+
+    const myCaption = `\*${title}*\n\*Опис:* ${description}\n\*Ціна:* ${cost} грн\n\*Зв'язок:* ${contact}`;
+
+    const arrayPhoto = [
+      {
+        type: 'photo',
+        media:
+          'https://firebasestorage.googleapis.com/v0/b/rn-imagelibrary.appspot.com/o/girl-2.jpg?alt=media&token=83c9d341-d488-4aaf-b478-2b0dacadd617',
+        caption: myCaption,
+        parse_mode: 'MarkdownV2',
+      },
+      {
+        type: 'photo',
+        media:
+          'https://firebasestorage.googleapis.com/v0/b/rn-imagelibrary.appspot.com/o/drags-5.jpg?alt=media&token=4505331d-bc50-4605-b777-04fe0c845dbc',
+      },
+      {
+        type: 'photo',
+        media:
+          'https://firebasestorage.googleapis.com/v0/b/rn-imagelibrary.appspot.com/o/tiger.jpg?alt=media&token=fdfe21d2-9826-4fd7-a0ab-25d5c6f2e438',
+      },
+      {
+        type: 'photo',
+        media:
+          'https://rehab-rpc.ru/wp-content/uploads/2020/05/legkiye-narkotiki.jpg',
+      },
+      {
+        type: 'photo',
+        media:
+          'https://rehab-rpc.ru/wp-content/uploads/2020/05/legkiye-narkotiki.jpg',
+      },
+    ];
+
+    await bot.sendMediaGroup(process.env.CHANNEL_ID, arrayPhoto);
 
     res.status(200).send({});
   } catch (error) {
-    console.log('/web-data bot.answerWebAppQuery ===>', error);
-
     await bot.answerWebAppQuery(queryId, {
       type: 'article',
       id: queryId,
-      title: 'Не вийшло відправити замовлення',
+      title: 'Не вийшло відправити оголошення',
       input_message_content: {
-        message_text: 'Не вийшло відправити замовлення',
+        message_text: `Не вийшло відправити оголошення, спробуйте знову`,
       },
     });
-    
-    res.status(500).send({});
+
+    res.status(500).send({ error });
   }
+
+  // try {
+  //   // await bot.answerWebAppQuery(queryId, {
+  //   await bot.answerWebAppQuery(process.env.CHANNEL_ID, {
+  //     type: 'article',
+  //     id: queryId,
+  //     title: 'Дякуємо',
+  //     input_message_content: {
+  //       message_text: `${title}, ${description}, ${cost}, ${contact}`,
+  //     }, //Text of the message to be sent, 1-4096 characters
+  //   });
+
+  //   res.status(200).send({});
+  // } catch (error) {
+  //   console.log('/web-data bot.answerWebAppQuery ===>', error);
+
+  //   await bot.answerWebAppQuery(queryId, {
+  //     type: 'article',
+  //     id: queryId,
+  //     title: 'Не вийшло відправити замовлення',
+  //     input_message_content: {
+  //       message_text: 'Не вийшло відправити замовлення',
+  //     },
+  //   });
+
+  //   res.status(500).send({});
+  // }
 });
 
 // =============== bot
