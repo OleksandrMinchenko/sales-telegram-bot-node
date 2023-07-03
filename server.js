@@ -5,6 +5,8 @@ const TelegramBot = require('node-telegram-bot-api');
 require('dotenv').config();
 
 const { notifyRoutes } = require('./routes/notifyRoute');
+const { parseDashes, parseDashesAndNormalize } = require('./middlewares/parseStringMiddleware');
+parseDashesAndNormalize('======> fgbdsn SdsdLKIOsf. dsdsd. sdsd. Ddsdsd. wdPLPsdsds. ') //
 const app = express();
 
 app.use(cors());
@@ -15,14 +17,14 @@ app.use(express.urlencoded({ extended: true }));
 const token = process.env.TOKEN;
 const urlReact = process.env.URL_REACT;
 const urlNode = process.env.URL_NODE;
-console.log(
-  'check ===>',
-  `https://api.telegram.org/bot${token}/getWebhookInfo`
-);
-console.log(
-  'activate ===>',
-  `https://api.telegram.org/bot${token}/setWebhook?url=${urlNode}`
-);
+// console.log(
+//   'check ===>',
+//   `https://api.telegram.org/bot${token}/getWebhookInfo`
+// );
+// console.log(
+//   'activate ===>',
+//   `https://api.telegram.org/bot${token}/setWebhook?url=${urlNode}`
+// );
 
 const bot = new TelegramBot(token, { polling: true });
 
@@ -78,7 +80,7 @@ app.post('/web-data', async (req, res) => {
     //   { parse_mode: 'MarkdownV2' } // or HTML
     // );
 
-    const myCaption = `\*${title}*\n\*Опис:* ${description}\n\*Ціна:* ${cost} грн\n\*Зв'язок:* ${contact}`;
+    const myCaption = `\*${parseDashes(title)}*\n\*Опис:* ${parseDashes(description)}\n\*Ціна:* ${cost} грн\n\*Зв'язок:* ${parseDashes(contact)}`;
 
     const arrayPhoto = [
       {

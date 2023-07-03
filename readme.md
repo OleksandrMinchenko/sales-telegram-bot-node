@@ -24,6 +24,7 @@
 - https://www.npmjs.com/package/dotenv
 
 # send message
+
 - [fomating text](https://core.telegram.org/bots/api#formatting-options)
 
 # send file
@@ -69,3 +70,8 @@
 - https://stackoverflow.com/questions/41308888/deploy-to-google-app-engine-via-a-github-repo
 - https://github.com/marketplace/actions/deploy-to-app-engine
 - https://docs.cloudbees.com/docs/cloudbees-codeship/latest/basic-continuous-deployment/deployment-to-google-app-engine
+
+# parse string
+
+- [exec](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec#examples)
+- [regex](https://regex101.com/)
