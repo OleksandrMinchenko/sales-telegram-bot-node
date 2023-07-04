@@ -1,35 +1,49 @@
-const parseDashes = string => {
-  return string.replaceAll(/-/gm, '\\-');
+const parseSymbolsAndNormalize = string => {
+  const newString = string.toLowerCase();
+  const sentenceArr = newString.split('.');
+
+  const goodArr = sentenceArr.filter(value => {
+    if (value?.length > 0 && value !== ' ') {
+      return true;
+    }
+  });
+
+  const newStr = goodArr.reduce((previousValue, element, index, array) => {
+    const sentence = element.trim();
+
+    const mutationSentence = sentence.replace(
+      sentence[0],
+      sentence[0]?.toLocaleUpperCase()
+    );
+    return previousValue + `${mutationSentence}. `;
+  }, '');
+
+  return parseSymbols(newStr);
 };
 
-const parseDashesAndNormalize = string => {
-  const REGEX = /\.\s\w/gm;
-
-  let newString = string.toLowerCase();
-  newString.replaceAll(/-/gm, '\\-');
-
-  let mutationString = newString;
-
-  const resultSearch = REGEX.exec(mutationString);
-  console.log(resultSearch?.length > 0);
-
-  // while (resultSearch?.length > 0) {
-    // console.log('index', resultSearch);
-    // console.log('string', newString);
-
-    // console.log(resultSearch[0].toLocaleUpperCase());
-    // mutationString = mutationString.replace(
-    //   resultSearch[0],
-    //   resultSearch[0].toLocaleUpperCase()
-    // );
-    // console.log(mutationString);
-  //   mutationString = 'sdsd'
-  // }
-
-  return;
+const parseSymbols = string => {
+  return string
+    .replace(/\_/g, '\\_')
+    .replace(/\*/g, '\\*')
+    .replace(/\[/g, '\\[')
+    .replace(/\]/g, '\\]')
+    .replace(/\(/g, '\\(')
+    .replace(/\)/g, '\\)')
+    .replace(/\~/g, '\\~')
+    .replace(/\`/g, '\\`')
+    .replace(/\>/g, '\\>')
+    .replace(/\#/g, '\\#')
+    .replace(/\+/g, '\\+')
+    .replace(/\-/g, '\\-')
+    .replace(/\=/g, '\\=')
+    .replace(/\|/g, '\\|')
+    .replace(/\{/g, '\\{')
+    .replace(/\}/g, '\\}')
+    .replace(/\./g, '\\.')
+    .replace(/\!/g, '\\!');
 };
 
 module.exports = {
-  parseDashes,
-  parseDashesAndNormalize,
+  parseSymbolsAndNormalize,
+  parseSymbols,
 };

@@ -72,6 +72,6 @@
 - https://docs.cloudbees.com/docs/cloudbees-codeship/latest/basic-continuous-deployment/deployment-to-google-app-engine
 
 # parse string
-
+- [corse error by special symbols](https://stackoverflow.com/questions/40626896/telegram-does-not-escape-some-markdown-characters)
 - [exec](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec#examples)
 - [regex](https://regex101.com/)

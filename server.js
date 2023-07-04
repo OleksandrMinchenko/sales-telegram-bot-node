@@ -5,11 +5,15 @@ const TelegramBot = require('node-telegram-bot-api');
 require('dotenv').config();
 
 const { notifyRoutes } = require('./routes/notifyRoute');
-const { parseDashes, parseDashesAndNormalize } = require('./middlewares/parseStringMiddleware');
-parseDashesAndNormalize('======> fgbdsn SdsdLKIOsf. dsdsd. sdsd. Ddsdsd. wdPLPsdsds. ') //
+const {
+  parseSymbols,
+  parseSymbolsAndNormalize,
+} = require('./middlewares/parseStringMiddleware');
+
 const app = express();
 
-app.use(cors());
+app.use(cors({ origin: '*' }));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -80,7 +84,9 @@ app.post('/web-data', async (req, res) => {
     //   { parse_mode: 'MarkdownV2' } // or HTML
     // );
 
-    const myCaption = `\*${parseDashes(title)}*\n\*Опис:* ${parseDashes(description)}\n\*Ціна:* ${cost} грн\n\*Зв'язок:* ${parseDashes(contact)}`;
+    const myCaption = `\*${parseSymbolsAndNormalize(title)}*\n\*Опис:* ${parseSymbolsAndNormalize(
+      description
+    )}\n\*Ціна:* ${cost} грн\n\*Зв'язок:* ${parseSymbols(contact)}`;
 
     const arrayPhoto = [
       {
