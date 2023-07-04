@@ -3,7 +3,7 @@ const parseSymbolsAndNormalize = string => {
   const sentenceArr = newString.split('.');
 
   const goodArr = sentenceArr.filter(value => {
-    if (value?.length > 0 && value !== ' ') {
+    if (value?.length > 0 && value !== ' ' && value !== '') {
       return true;
     }
   });
