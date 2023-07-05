@@ -12,10 +12,22 @@ const {
 
 const app = express();
 
-app.use(cors({ origin: '*' }));
-
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use('/', notifyRoutes);
+
+app.use('/', (req, res) => {
+  const pathToHomePage = path.join(__dirname, 'index.html');
+  res.sendFile(pathToHomePage);
+});
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}/`);
+});
 
 // =============== bot
 const token = process.env.TOKEN;
@@ -84,7 +96,9 @@ app.post('/web-data', async (req, res) => {
     //   { parse_mode: 'MarkdownV2' } // or HTML
     // );
 
-    const myCaption = `\*${parseSymbolsAndNormalize(title)}*\n\*Опис:* ${parseSymbolsAndNormalize(
+    const myCaption = `\*${parseSymbolsAndNormalize(
+      title
+    )}*\n\*Опис:* ${parseSymbolsAndNormalize(
       description
     )}\n\*Ціна:* ${cost} грн\n\*Зв'язок:* ${parseSymbols(contact)}`;
 
@@ -160,19 +174,4 @@ app.post('/web-data', async (req, res) => {
 
   //   res.status(500).send({});
   // }
-});
-
-// =============== bot
-
-app.use('/', notifyRoutes);
-
-app.use('/', (req, res) => {
-  const pathToHomePage = path.join(__dirname, 'index.html');
-  res.sendFile(pathToHomePage);
-});
-
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}/`);
 });

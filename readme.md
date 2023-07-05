@@ -75,3 +75,7 @@
 - [corse error by special symbols](https://stackoverflow.com/questions/40626896/telegram-does-not-escape-some-markdown-characters)
 - [exec](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec#examples)
 - [regex](https://regex101.com/)
+
+# google cloud storage
+- [nodejs-storage](https://github.com/googleapis/nodejs-storage)
+- [google-cloud-storage-and-node-js](https://medium.com/@olamilekan001/image-upload-with-google-cloud-storage-and-node-js-a1cf9baa1876)
