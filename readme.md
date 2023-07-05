@@ -79,3 +79,6 @@
 # google cloud storage
 - [nodejs-storage](https://github.com/googleapis/nodejs-storage)
 - [google-cloud-storage-and-node-js](https://medium.com/@olamilekan001/image-upload-with-google-cloud-storage-and-node-js-a1cf9baa1876)
+- [gsutil](https://cloud.google.com/storage/docs/sliced-object-downloads#gsutil-sod)
+- [image-processing](https://cloud.google.com/run/docs/tutorials/image-processing)
+- [video](https://www.youtube.com/watch?v=pGSzMfKBV9Q&t=4s&ab_channel=BenAwad)

@@ -1,6 +1,11 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const bodyParser = require('body-parser');
+const multer = require('multer');
+const { uploadImage } = require('./helpers/helpers');
+const { visionCheck } = require('./middlewares/visionMiddleware');
+
 const TelegramBot = require('node-telegram-bot-api');
 require('dotenv').config();
 
@@ -15,6 +20,60 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+const multerMid = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    // no larger than 5mb.
+    fileSize: 5 * 1024 * 1024,
+  },
+});
+
+app.use((err, req, res, next) => {
+  res.status(500).json({
+    error: err,
+    message: 'Internal server error!',
+  });
+  next();
+});
+
+app.disable('x-powered-by');
+app.use(multerMid.single('file'));
+// app.use(bodyParser.json())
+// app.use(bodyParser.urlencoded({ extended: false }));
+
+app.post('/uploads', async (req, res, next) => {
+  try {
+    const myFile = req.file;
+    const imageUrl = await uploadImage(myFile);
+
+    const checkImageContent = await visionCheck(
+      imageUrl,
+      {},
+      {
+        safe: true,
+        label: true,
+        langSafe: 'ua',
+      }
+    );
+
+    res.status(200).json({
+      message: 'Upload was successful',
+      data: { imageUrl, checkImageContent },
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// app.get('/get-image', async (req, res, next) => {
+//   res.status(200).json({
+//     message: 'Upload was successful',
+//     data: {},
+//   });
+// });
+
+// ======== >
 
 app.use('/', notifyRoutes);
 
