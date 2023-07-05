@@ -10,8 +10,6 @@ const {
   upload,
   multerErrorHandling,
 } = require('../middlewares/uploadMiddleware');
-const {
-} = require('../middlewares/uploadGoogleCloudMiddleware');
 
 router.post('/check-one-photo', checkContentOnePhoto);
 
