@@ -1,6 +1,31 @@
 const { visionCheck } = require('../middlewares/visionMiddleware');
+const { uploadImage } = require('../helpers/uploadImageToBucket');
 const fs = require('fs').promises;
 const path = require('path');
+
+const checkOnePhotoSendCloud = async (req, res, next) => {
+  try {
+    const myFile = req.file;
+    const imageUrl = await uploadImage(myFile);
+
+    const checkImageContent = await visionCheck(
+      imageUrl,
+      {},
+      {
+        safe: true,
+        label: true,
+        langSafe: 'ua',
+      }
+    );
+
+    res.status(200).json({
+      message: 'Upload was successful',
+      data: { imageUrl, checkImageContent },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
 // form-data
 const checkContentSomePhotos = async (req, res) => {
@@ -67,6 +92,7 @@ const checkContentOnePhoto = async (req, res) => {
 };
 
 module.exports = {
+  checkOnePhotoSendCloud,
   checkContentSomePhotos,
   checkContentOnePhoto,
 };

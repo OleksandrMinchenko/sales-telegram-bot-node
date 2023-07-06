@@ -1,5 +1,14 @@
 const multer = require('multer');
 
+const multerMid = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    // no larger than 5mb.
+    fileSize: 5 * 1024 * 1024,
+  },
+});
+
+// ========= to local folder
 const multerConfig = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, './uploads');
@@ -22,6 +31,7 @@ const multerErrorHandling = (err, req, res, next) => {
 };
 
 module.exports = {
+  multerMid,
   upload,
   multerErrorHandling,
 };

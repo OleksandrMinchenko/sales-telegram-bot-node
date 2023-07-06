@@ -1,25 +1,15 @@
 const util = require('util');
-const { gc } = require('../config/index');
+require('dotenv').config();
+const { gc } = require('../config/bucket');
 
-// /**
-//  *
-//  * @param { File } object file object that will be uploaded
-//  * @description - This function does the following
-//  * - It uploads a file to the image bucket on Google Cloud
-//  * - It accepts an object as an argument with the
-//  *   "originalname" and "buffer" as keys
-//  */
-
-const BUCKET_NAME = 'photo-for-sales-chanel'
+const BUCKET_NAME = process.env.BUCKET_NAME;
 
 const uploadImage = file =>
   new Promise((resolve, reject) => {
     const { originalname, buffer } = file;
     // console.log(originalname);
 
-    const blob = gc
-      .bucket(BUCKET_NAME)
-      .file(originalname.replace(/ /g, '_'));
+    const blob = gc.bucket(BUCKET_NAME).file(originalname.replace(/ /g, '_'));
 
     // console.log(blob);
     const blobStream = blob.createWriteStream({

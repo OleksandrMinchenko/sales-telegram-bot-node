@@ -82,3 +82,7 @@
 - [gsutil](https://cloud.google.com/storage/docs/sliced-object-downloads#gsutil-sod)
 - [image-processing](https://cloud.google.com/run/docs/tutorials/image-processing)
 - [video](https://www.youtube.com/watch?v=pGSzMfKBV9Q&t=4s&ab_channel=BenAwad)
+- [rename file for multer.memoryStorage](https://stackoverflow.com/questions/65529221/how-to-change-a-file-originalname-in-multer)
+
+# other docs and articles
+- [react-loader](https://mhnpd.github.io/react-loader-spinner/docs/components/mutating-dots/)
