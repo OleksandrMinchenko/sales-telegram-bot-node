@@ -6,11 +6,9 @@ const { client } = require('../config/vision');
 
 const visionCheck = async (
   imagePath,
-  file,
   { safe: safety, label: description, langSafe }
 ) => {
   console.log('imagePath', imagePath);
-  console.log('file', file);
 
   let safe,
     label,
@@ -69,7 +67,6 @@ const visionCheck = async (
   isPermitted = [isPermittedSafe, isPermittedLabel].includes(true);
 
   return {
-    file,
     isPermitted: !isPermitted,
     safe,
     label,

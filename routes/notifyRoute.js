@@ -18,14 +18,14 @@ const {
 // new
 router.post(
   '/uploads',
-  multerMid.single('file'),
+  multerMid.single('photo'),
   multerErrorHandling,
   checkOnePhotoSendCloud
 );
 
 router.post(
   '/uploads-some-photos',
-  multerMid.array('files', 5),
+  multerMid.array('photos', 5),
   multerErrorHandling,
   checkSomePhotosSendCloud
 );

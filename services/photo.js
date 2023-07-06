@@ -10,11 +10,9 @@ const checkOnePhotoSendCloud = async (req, res, next) => {
 
     const checkImageContent = await visionCheck(
       imageUrl,
-      {},
       {
         safe: true,
         label: true,
-        langSafe: 'ua',
       }
     );
 
@@ -29,6 +27,7 @@ const checkOnePhotoSendCloud = async (req, res, next) => {
 
 const checkSomePhotosSendCloud = async (req, res) => {
   const arrayPhotos = req.files;
+  
   console.log('arrayPhotos ', arrayPhotos);
 
   const unresolvedPromises = arrayPhotos.map(async item => {
@@ -36,17 +35,14 @@ const checkSomePhotosSendCloud = async (req, res) => {
 
     const checkImageContent = visionCheck(
       imageUrl,
-      {},
       {
         safe: true,
         label: true,
-        langSafe: 'ua',
       }
     );
     return checkImageContent;
   });
 
-  console.log('before resultCheck ============>');
   const resultCheck = await Promise.all(unresolvedPromises);
   console.log('resultCheck', resultCheck);
   // remove photos
@@ -73,17 +69,12 @@ const checkContentSomePhotos = async (req, res) => {
   console.log('before unresolvedPromises ============>');
 
   const unresolvedPromises = arrayPhotos.map(item => {
-    // const path = path.join('uploads', item.filename);
     const path = path.join(__dirname, 'uploads', item.filename);
-    console.log('item.filename ============>', item.filename);
-    console.log('__dirname ============>', __dirname);
-    console.log('path ============>', path);
     arrayPath.push(path);
 
-    const res = visionCheck(path, item, {
+    const res = visionCheck(path, {
       safe: true,
       label: true,
-      // langSafe: 'ua',
     });
 
     return res;
@@ -113,7 +104,6 @@ const checkContentOnePhoto = async (req, res) => {
 
   const result = await visionCheck(
     photoUrl,
-    {},
     {
       safe: true,
       label: true,

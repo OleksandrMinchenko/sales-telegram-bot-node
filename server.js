@@ -2,7 +2,6 @@ const TelegramBot = require('node-telegram-bot-api');
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const { multerMid } = require('./middlewares/uploadMiddleware');
 require('dotenv').config();
 
 const { notifyRoutes } = require('./routes/notifyRoute');
@@ -17,7 +16,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.disable('x-powered-by');
-// app.use(multerMid.single('file'));
 
 app.use((err, req, res, next) => {
   res.status(500).json({
