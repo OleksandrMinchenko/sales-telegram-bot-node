@@ -27,6 +27,43 @@ const checkOnePhotoSendCloud = async (req, res, next) => {
   }
 };
 
+const checkSomePhotosSendCloud = async (req, res) => {
+  const arrayPhotos = req.files;
+  console.log('arrayPhotos ', arrayPhotos);
+
+  const unresolvedPromises = arrayPhotos.map(async item => {
+    const imageUrl = await uploadImage(item);
+
+    const checkImageContent = visionCheck(
+      imageUrl,
+      {},
+      {
+        safe: true,
+        label: true,
+        langSafe: 'ua',
+      }
+    );
+    return checkImageContent;
+  });
+
+  console.log('before resultCheck ============>');
+  const resultCheck = await Promise.all(unresolvedPromises);
+  console.log('resultCheck', resultCheck);
+  // remove photos
+  // arrayPath.map(item => {
+  //   fs.unlink(item, error => {
+  //     if (error) {
+  //       res.status(500).send('fs.unlink: ' + error.message);
+  //     }
+  //   });
+  // });
+
+  res.send({
+    status: 'success',
+    resultCheck,
+  });
+};
+
 // form-data
 const checkContentSomePhotos = async (req, res) => {
   const arrayPhotos = req.files;
@@ -93,6 +130,8 @@ const checkContentOnePhoto = async (req, res) => {
 
 module.exports = {
   checkOnePhotoSendCloud,
+  checkSomePhotosSendCloud,
+
   checkContentSomePhotos,
   checkContentOnePhoto,
 };
