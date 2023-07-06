@@ -25,6 +25,9 @@ const checkOnePhotoSendCloud = async (req, res, next) => {
   }
 };
 
+// спробувати зміниит порядок дій 
+// - спочатку перевірити файл, якщо є дозвіл то завантажити його у кошик, 
+// а вже потім відправити на фронт посилання
 const checkSomePhotosSendCloud = async (req, res) => {
   const arrayPhotos = req.files;
   

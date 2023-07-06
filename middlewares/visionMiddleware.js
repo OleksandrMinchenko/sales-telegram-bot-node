@@ -67,6 +67,7 @@ const visionCheck = async (
   isPermitted = [isPermittedSafe, isPermittedLabel].includes(true);
 
   return {
+    imageURL: imagePath,
     isPermitted: !isPermitted,
     safe,
     label,

@@ -25,12 +25,7 @@ app.use((err, req, res, next) => {
   next();
 });
 
-app.use('/', notifyRoutes);
-
-app.use('/', (req, res) => {
-  const pathToHomePage = path.join(__dirname, 'index.html');
-  res.sendFile(pathToHomePage);
-});
+app.use('/check-photo', notifyRoutes);
 
 const PORT = process.env.PORT || 3000;
 
@@ -95,55 +90,63 @@ bot.on('webhook_error', error => {
 });
 
 app.post('/web-data', async (req, res) => {
-  const { title, description, cost, contact, queryId } = req.body;
   // console.log('req.body =====> ', req?.body);
+  const { title, description, cost, contact, queryId, photoURL } = req.body;
+  console.log('inside web-data =====>>>>> ', photoURL);
+  // console.log('inside web-data =====>>>>> ');
 
-  try {
-    // await bot.sendMessage(
-    //   process.env.CHANNEL_ID,
-    //   `\*${title}* \n${description} \n${cost}грн \n${contact}`,
-    //   { parse_mode: 'MarkdownV2' } // or HTML
-    // );
+  // await bot.sendMessage(
+  //   process.env.CHANNEL_ID,
+  //   `\*${title}* \n${description} \n${cost}грн \n${contact}`,
+  //   { parse_mode: 'MarkdownV2' } // or HTML
+  // );
 
-    const myCaption = `\*${parseSymbolsAndNormalize(
-      title
-    )}*\n\*Опис:* ${parseSymbolsAndNormalize(
-      description
-    )}\n\*Ціна:* ${cost} грн\n\*Зв'язок:* ${parseSymbols(contact)}`;
+  const myCaption = `\*${parseSymbolsAndNormalize(
+    title
+  )}*\n\*Опис:* ${parseSymbolsAndNormalize(
+    description
+  )}\n\*Ціна:* ${cost} грн\n\*Зв'язок:* ${parseSymbols(contact)}`;
 
-    const arrayPhoto = [
-      {
+  const arrayPhoto = photoURL.map((item, index) => {
+    if (index === 0) {
+      return {
         type: 'photo',
-        media:
-          'https://firebasestorage.googleapis.com/v0/b/rn-imagelibrary.appspot.com/o/girl-2.jpg?alt=media&token=83c9d341-d488-4aaf-b478-2b0dacadd617',
+        media: photoURL[index],
         caption: myCaption,
         parse_mode: 'MarkdownV2',
-      },
-      {
-        type: 'photo',
-        media:
-          'https://firebasestorage.googleapis.com/v0/b/rn-imagelibrary.appspot.com/o/drags-5.jpg?alt=media&token=4505331d-bc50-4605-b777-04fe0c845dbc',
-      },
-      {
-        type: 'photo',
-        media:
-          'https://firebasestorage.googleapis.com/v0/b/rn-imagelibrary.appspot.com/o/tiger.jpg?alt=media&token=fdfe21d2-9826-4fd7-a0ab-25d5c6f2e438',
-      },
-      {
-        type: 'photo',
-        media:
-          'https://rehab-rpc.ru/wp-content/uploads/2020/05/legkiye-narkotiki.jpg',
-      },
-      {
-        type: 'photo',
-        media:
-          'https://rehab-rpc.ru/wp-content/uploads/2020/05/legkiye-narkotiki.jpg',
-      },
-    ];
+      };
+    }
+    return {
+      type: 'photo',
+      media: photoURL[index],
+    };
+  });
 
+  // const arrayPhoto = [
+  //   {},
+  // {
+  //   type: 'photo',
+  //   media: photoURL[1],
+  // },
+  // {
+  //   type: 'photo',
+  //   media: photoURL[2],
+  // },
+  // {
+  //   type: 'photo',
+  //   media: photoURL[3],
+  // },
+  // {
+  //   type: 'photo',
+  //   media: photoURL[4],
+  // },
+  // ];
+
+  // const arrayPhoto = photoURL;
+  try {
     await bot.sendMediaGroup(process.env.CHANNEL_ID, arrayPhoto);
 
-    res.status(200).send({});
+    res.status(200).send({ ...req.body, sendToTelegram: arrayPhoto });
   } catch (error) {
     await bot.answerWebAppQuery(queryId, {
       type: 'article',
@@ -183,4 +186,9 @@ app.post('/web-data', async (req, res) => {
 
   //   res.status(500).send({});
   // }
+});
+
+app.use('/', (req, res) => {
+  const pathToHomePage = path.join(__dirname, 'index.html');
+  res.sendFile(pathToHomePage);
 });
