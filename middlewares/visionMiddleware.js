@@ -12,22 +12,22 @@ const visionCheck = async imagePath => {
     isPermittedLabel;
 
   try {
-    const [labels] = await client.labelDetection(imagePath);
-    const arrayLabels = labels.labelAnnotations;
+    const [result] = await client.safeSearchDetection(imagePath);
 
-    label = arrayLabels.map(item => item.description);
-    isPermittedLabel = forbiddenValues.some(item => label.includes(item));
+    safe = result.safeSearchAnnotation;
+
+    const safeValues = Object.values(safe);
+    isPermittedSafe = forbiddenValues.some(item => safeValues.includes(item));
   } catch (error) {
     return error.message;
   }
 
   try {
-    const [result] = await client.safeSearchDetection(imagePath);
+    const [labels] = await client.labelDetection(imagePath);
+    const arrayLabels = labels.labelAnnotations;
 
-    const detections = result.safeSearchAnnotation;
-
-    const safeValues = Object.values(detections);
-    isPermittedSafe = forbiddenValues.some(item => safeValues.includes(item));
+    label = arrayLabels.map(item => item.description);
+    isPermittedLabel = forbiddenValues.some(item => label.includes(item));
   } catch (error) {
     return error.message;
   }
