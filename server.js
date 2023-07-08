@@ -90,7 +90,6 @@ bot.on('webhook_error', error => {
 });
 
 app.post('/web-data', async (req, res) => {
-  // console.log('req.body =====> ', req?.body);
   const { title, description, cost, contact, queryId, photoURL } = req.body;
   console.log('inside web-data =====>>>>> ', photoURL);
   // console.log('inside web-data =====>>>>> ');
@@ -122,27 +121,6 @@ app.post('/web-data', async (req, res) => {
     };
   });
 
-  // const arrayPhoto = [
-  //   {},
-  // {
-  //   type: 'photo',
-  //   media: photoURL[1],
-  // },
-  // {
-  //   type: 'photo',
-  //   media: photoURL[2],
-  // },
-  // {
-  //   type: 'photo',
-  //   media: photoURL[3],
-  // },
-  // {
-  //   type: 'photo',
-  //   media: photoURL[4],
-  // },
-  // ];
-
-  // const arrayPhoto = photoURL;
   try {
     await bot.sendMediaGroup(process.env.CHANNEL_ID, arrayPhoto);
 
@@ -159,33 +137,6 @@ app.post('/web-data', async (req, res) => {
 
     res.status(500).send({ error });
   }
-
-  // try {
-  //   // await bot.answerWebAppQuery(queryId, {
-  //   await bot.answerWebAppQuery(process.env.CHANNEL_ID, {
-  //     type: 'article',
-  //     id: queryId,
-  //     title: 'Дякуємо',
-  //     input_message_content: {
-  //       message_text: `${title}, ${description}, ${cost}, ${contact}`,
-  //     }, //Text of the message to be sent, 1-4096 characters
-  //   });
-
-  //   res.status(200).send({});
-  // } catch (error) {
-  //   console.log('/web-data bot.answerWebAppQuery ===>', error);
-
-  //   await bot.answerWebAppQuery(queryId, {
-  //     type: 'article',
-  //     id: queryId,
-  //     title: 'Не вийшло відправити замовлення',
-  //     input_message_content: {
-  //       message_text: 'Не вийшло відправити замовлення',
-  //     },
-  //   });
-
-  //   res.status(500).send({});
-  // }
 });
 
 app.use('/', (req, res) => {

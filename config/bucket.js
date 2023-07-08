@@ -15,7 +15,6 @@ const STORAGE_PROJECT_KEY = {
     client_x509_cert_url: process.env.CLIENT_URL_BUCKET,
     universe_domain: process.env.UNIVERSE_DOMAIN_BUCKET,
 };
-// console.log('STORAGE_PROJECT_KEY', STORAGE_PROJECT_KEY.private_key);
 
 const gc = new Storage({
   //   keyFilename: path.join(__dirname, './telegram-bot-keys.json'),
