@@ -8,9 +8,9 @@ const checkOnePhotoSendCloud = async (req, res, next) => {
 
     const checkImageContent = await visionCheck(imageUrl);
 
-    res.status(200).json({
-      message: 'Upload was successful',
-      data: { imageUrl, checkImageContent },
+    res.send({
+      status: 'Upload was successful',
+      resultCheck: checkImageContent,
     });
   } catch (error) {
     next(error);
