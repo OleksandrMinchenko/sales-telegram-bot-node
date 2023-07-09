@@ -1,5 +1,5 @@
 const forbiddenValues = [
-  'POSSIBLE',
+  // 'POSSIBLE',
   'LIKELY',
   'VERY_LIKELY',
   'Herb',
@@ -9,6 +9,9 @@ const forbiddenValues = [
   'Bread flour',
   'All-purpose flour',
   'Sea salt',
+  // new words
+  'Medical equipment',
+  'Science',
 ];
 
 module.exports = {

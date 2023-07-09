@@ -23,8 +23,35 @@ const visionCheck = async imagePath => {
   }
 
   try {
-    const [labels] = await client.labelDetection(imagePath);
-    const arrayLabels = labels.labelAnnotations;
+    // const [labels] = await client.labelDetection(imagePath);
+    const requests = {
+      image: {
+        source: {
+          imageUri: imagePath,
+        },
+      },
+      features: [
+        {
+          maxResults: 100,
+          type: 'LABEL_DETECTION',
+        },
+        {
+          maxResults: 100,
+          type: 'WEB_DETECTION',
+        },
+        // {
+        //   maxResults: 100,
+        //   type: 'SAFE_SEARCH',
+        // },
+      ],
+    };
+    const [result] = await client.annotateImage(requests);
+    console.log('result', result);
+
+    const arrayLabels = result.labelAnnotations;
+    const arrayWebDetection = result.webDetection;
+    console.log(arrayWebDetection);
+    // const arrayLabels = result.labelAnnotations;
 
     label = arrayLabels.map(item => item.description);
     isPermittedLabel = forbiddenValues.some(item => label.includes(item));

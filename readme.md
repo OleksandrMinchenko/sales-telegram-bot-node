@@ -87,3 +87,4 @@
 # other docs and articles
 - [react-loader](https://mhnpd.github.io/react-loader-spinner/docs/components/mutating-dots/)
 - [express.json() and express.urlencoded()](https://stackoverflow.com/questions/23259168/what-are-express-json-and-express-urlencoded)
+- [number-of-labels](https://stackoverflow.com/questions/45259002/google-cloud-vision-api-detects-different-number-of-labels)
