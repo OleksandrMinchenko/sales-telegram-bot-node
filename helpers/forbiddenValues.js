@@ -1,5 +1,4 @@
 const drags = [
-  // 'Pin on approvals - Pinterest',
   'Herb',
   'Plant',
   'Hemp family',
@@ -105,7 +104,6 @@ const drags = [
   'ganja',
   'darts',
   'pills',
-  'blue',
   'crack',
   'sniper',
   'smoking',
@@ -253,7 +251,9 @@ const violence = [
 
 const weapon = [
   'Shooting',
+  // 'revolver',
   'Gun',
+  'glock',
   'Kalashnikov',
   'Fire',
   'Зброя',
@@ -327,7 +327,7 @@ const weapon = [
   'ворог',
   'viyna',
   'rushnytsya',
-  'pistolet',
+  'pistol',
   'nizh',
   'avtomat',
   'mech',
@@ -367,7 +367,6 @@ const weapon = [
   'mishenʹ',
   'vbyvaty',
   'napad',
-  'meta',
   'zalizo',
   'strila',
   'shchyt',
@@ -375,7 +374,6 @@ const weapon = [
   'udar',
   'kalash',
   'kiler',
-  'metal',
   'yaderna',
   'bytva',
   'zbroyar',
@@ -475,7 +473,6 @@ const weapon = [
   'tank',
   'armiya',
   'vystrel',
-  // 'boy',
   'soldat',
   'pulemot',
   'kalashnikov',
@@ -511,7 +508,6 @@ const weapon = [
   'udar',
   'kalash',
   'killer',
-  'metall',
   'yadernoye',
   'srazheniye',
   'oruzheynik',
@@ -601,7 +597,6 @@ const alcohol = [
   'spyrt',
   'hradus',
   'pokhmillya',
-  'bar',
   'zalezhnistʹ',
   'pyyatstvo',
   'bukhlo',
@@ -739,7 +734,6 @@ const alcohol = [
   'spirt',
   'gradus',
   "pokhmel'ye",
-  'bar',
   "zavisimost'",
   "p'yanstvo",
   'bukhlo',
@@ -817,7 +811,6 @@ const alcohol = [
   'alcohol',
   'degree',
   'hangover',
-  'bar',
   'addiction',
   'drunkenness',
   'booze',
@@ -830,10 +823,8 @@ const alcohol = [
   'glass',
   'champagne',
   'cognac',
-  'drink',
   'rum',
   'booze',
-  'gin',
   'glass',
   'tequila',
   'party',
@@ -893,12 +884,14 @@ const alcohol = [
   'hangover',
 ];
 
-const forbiddenValues = [
+const safeDesc = [
   // 'POSSIBLE',
   'LIKELY',
   'VERY_LIKELY',
+];
+
+const forbiddenValues = [
   'Medical equipment',
-  'Science',
   'экзорцист',
   'опт',
   'оптом',
@@ -909,8 +902,10 @@ const forbiddenValues = [
   ...violence,
   ...weapon,
   ...alcohol,
+  ...safeDesc,
 ];
 
 module.exports = {
   forbiddenValues,
+  safeDesc,
 };

@@ -1,7 +1,8 @@
 // https://cloud.google.com/vision/docs/reference/rpc/google.cloud.vision.v1#google.cloud.vision.v1.SafeSearchAnnotation
 // https://cloud.google.com/vision/docs/reference/rpc/google.cloud.vision.v1#likelihood
 
-const { forbiddenValues } = require('../services/forbiddenValues');
+const { safeDesc } = require('../helpers/forbiddenValues');
+const { checkContent } = require('../helpers/checkContentWords');
 const { client } = require('../config/vision');
 
 const visionCheck = async imagePath => {
@@ -9,9 +10,9 @@ const visionCheck = async imagePath => {
     label,
     webDesc,
     webMatch,
-    attentionWordFirst,
-    attentionWordSecond,
-    attentionWordThird,
+    triggerWordLabel,
+    triggerWordWeb,
+    triggerWordMatch,
     isPermitted = false,
     isPermittedSafe,
     isPermittedLabel,
@@ -24,13 +25,12 @@ const visionCheck = async imagePath => {
     safe = result.safeSearchAnnotation;
 
     const safeValues = Object.values(safe);
-    isPermittedSafe = forbiddenValues.some(item => safeValues.includes(item));
+    isPermittedSafe = safeDesc.some(item => safeValues.includes(item));
   } catch (error) {
     return error.message;
   }
 
   try {
-    // const [labels] = await client.labelDetection(imagePath);
     const requests = {
       image: {
         source: {
@@ -53,34 +53,22 @@ const visionCheck = async imagePath => {
       ],
     };
     const [result] = await client.annotateImage(requests);
-    const forbWords = forbiddenValues.join(' | ');
-    const regex = new RegExp(forbWords);
-
     const arrayLabels = result.labelAnnotations;
     label = arrayLabels.map(item => item.description);
-    const checkLabel = label.join(', ');
-    const findLabel = checkLabel.match(regex);
-    attentionWordFirst = findLabel ? findLabel[0] : null;
-    isPermittedLabel = findLabel ? true : false;
-    console.log('isPermittedLabel', isPermittedLabel);
-
+    const resultLabel = checkContent(label);
+    isPermittedLabel = resultLabel.result;
+    triggerWordLabel = resultLabel.triggerWord;
+    //
     const { webEntities, pagesWithMatchingImages } = result.webDetection;
     webDesc = webEntities.map(item => item.description);
-    const checkWebDesc = webDesc.join(', ');
-    // console.log(checkWebDesc);
-    const findWebDesc = checkWebDesc.match(regex);
-    // console.log(findWebDesc);
-
-    attentionWordSecond = findWebDesc ? findWebDesc[0] : null;
-    isPermittedWeb = findWebDesc ? true : false;
-    console.log('isPermittedWeb', isPermittedWeb);
-
+    const resultWebDesc = checkContent(webDesc);
+    isPermittedWeb = resultWebDesc.result;
+    triggerWordWeb = resultWebDesc.triggerWord;
+    //
     webMatch = pagesWithMatchingImages.map(item => item.pageTitle);
-    const checkWeb = webMatch.join(', ');
-    const findMatch = checkWeb.match(regex);
-    attentionWordThird = findMatch ? findMatch[0] : null;
-    isPermittedMatch = findMatch ? true : false;
-    console.log('isPermittedMatch', isPermittedMatch);
+    const resultWebMatch = checkContent(webMatch);
+    isPermittedMatch = resultWebMatch.result;
+    triggerWordMatch = resultWebMatch.triggerWord;
   } catch (error) {
     return error.message;
   }
@@ -96,19 +84,16 @@ const visionCheck = async imagePath => {
     imageURL: imagePath,
     isPermitted: !isPermitted,
     safe,
-    label: attentionWordFirst
-      ? [`=========> not correct word =======> ${attentionWordFirst}`, ...label]
+    label: triggerWordLabel
+      ? [`=========> not trigger word =======> ${triggerWordLabel}`, ...label]
       : label,
-    webDesc: attentionWordSecond
-      ? [
-          `=========> not correct word =======> ${attentionWordSecond}`,
-          ...webDesc,
-        ]
+    webDesc: triggerWordWeb
+      ? [`=========> not trigger word =======> ${triggerWordWeb}`, ...webDesc]
       : webDesc,
 
-    webMatch: attentionWordThird
+    webMatch: triggerWordMatch
       ? [
-          `=========> not correct word =======> ${attentionWordThird}`,
+          `=========> not trigger word =======> ${triggerWordMatch}`,
           ...webMatch,
         ]
       : webMatch,
