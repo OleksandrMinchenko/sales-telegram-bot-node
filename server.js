@@ -139,6 +139,35 @@ app.post('/web-data', async (req, res) => {
   }
 });
 
+app.post('/web-data-buy', async (req, res) => {
+  const { title, description, contact, queryId } = req.body;
+
+  const myMessage = `\*${parseSymbolsAndNormalize(
+    title
+  )}*\n\*Опис:* ${parseSymbolsAndNormalize(
+    description
+  )}\n\*Зв'язок:* ${parseSymbols(contact)}`;
+
+  try {
+    await bot.sendMessage(process.env.CHANNEL_ID, myMessage, {
+      parse_mode: 'MarkdownV2',
+    });
+
+    res.status(200).send({ ...req.body, sendToTelegram: myMessage });
+  } catch (error) {
+    await bot.answerWebAppQuery(queryId, {
+      type: 'article',
+      id: queryId,
+      title: 'Не вийшло відправити оголошення',
+      input_message_content: {
+        message_text: `Не вийшло відправити оголошення, спробуйте знову`,
+      },
+    });
+
+    res.status(500).send({ error });
+  }
+});
+
 app.use('/', (req, res) => {
   const pathToHomePage = path.join(__dirname, 'index.html');
   res.sendFile(pathToHomePage);
