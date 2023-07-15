@@ -54,21 +54,29 @@ const visionCheck = async imagePath => {
     };
     const [result] = await client.annotateImage(requests);
     const arrayLabels = result.labelAnnotations;
-    label = arrayLabels.map(item => item.description);
-    const resultLabel = checkContent(label);
-    isPermittedLabel = resultLabel.result;
-    triggerWordLabel = resultLabel.triggerWord;
-    //
+
+    if (arrayLabels.length !== 0) {
+      label = arrayLabels.map(item => item.description);
+      const resultLabel = checkContent(label);
+      isPermittedLabel = resultLabel.result;
+      triggerWordLabel = resultLabel.triggerWord;
+    }
+
     const { webEntities, pagesWithMatchingImages } = result.webDetection;
-    webDesc = webEntities.map(item => item.description);
-    const resultWebDesc = checkContent(webDesc);
-    isPermittedWeb = resultWebDesc.result;
-    triggerWordWeb = resultWebDesc.triggerWord;
-    //
-    webMatch = pagesWithMatchingImages.map(item => item.pageTitle);
-    const resultWebMatch = checkContent(webMatch);
-    isPermittedMatch = resultWebMatch.result;
-    triggerWordMatch = resultWebMatch.triggerWord;
+    
+    if (webEntities.length !== 0) {
+      webDesc = webEntities.map(item => item.description);
+      const resultWebDesc = checkContent(webDesc);
+      isPermittedWeb = resultWebDesc.result;
+      triggerWordWeb = resultWebDesc.triggerWord;
+    }
+
+    if (pagesWithMatchingImages.length !== 0) {
+      webMatch = pagesWithMatchingImages.map(item => item.pageTitle);
+      const resultWebMatch = checkContent(webMatch);
+      isPermittedMatch = resultWebMatch.result;
+      triggerWordMatch = resultWebMatch.triggerWord;
+    }
   } catch (error) {
     return error.message;
   }
@@ -85,17 +93,14 @@ const visionCheck = async imagePath => {
     isPermitted: !isPermitted,
     safe,
     label: triggerWordLabel
-      ? [`=========> not trigger word =======> ${triggerWordLabel}`, ...label]
+      ? [`=========> trigger word =======> ${triggerWordLabel}`, ...label]
       : label,
     webDesc: triggerWordWeb
-      ? [`=========> not trigger word =======> ${triggerWordWeb}`, ...webDesc]
+      ? [`=========> trigger word =======> ${triggerWordWeb}`, ...webDesc]
       : webDesc,
 
     webMatch: triggerWordMatch
-      ? [
-          `=========> not trigger word =======> ${triggerWordMatch}`,
-          ...webMatch,
-        ]
+      ? [`=========> trigger word =======> ${triggerWordMatch}`, ...webMatch]
       : webMatch,
   };
 };
