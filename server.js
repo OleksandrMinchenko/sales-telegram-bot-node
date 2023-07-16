@@ -89,7 +89,12 @@ bot.on('webhook_error', error => {
   console.log('bot_webhook_error', error.message);
 });
 
-app.post('/web-data', async (req, res) => {
+app.get('/check-chat-content', async (req, res) => {
+  const { queryId } = req.body;
+  res.status(200).send({ queryId });
+});
+
+app.post('/web-data-sale', async (req, res) => {
   const { title, description, cost, contact, queryId, photoURL } = req.body;
   console.log('inside web-data =====>>>>> ', photoURL);
   // console.log('inside web-data =====>>>>> ');
