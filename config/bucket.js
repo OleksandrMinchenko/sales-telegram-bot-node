@@ -3,17 +3,17 @@ const path = require('path');
 require('dotenv').config();
 
 const STORAGE_PROJECT_KEY = {
-    type: process.env.TYPE_BUCKET,
-    project_id: process.env.PROJECT_ID_BUCKET,
-    private_key_id: process.env.PRIVATE_KEY_ID_BUCKET,
-    private_key: process.env.PRIVATE_KEY_BUCKET,
-    client_email: process.env.CLIENT_MAIL_BUCKET,
-    client_id: process.env.CLIENT_ID_BUCKET,
-    auth_uri: process.env.AUTH_URI_BUCKET,
-    token_uri: process.env.TOKEN_URI_BUCKET,
-    auth_provider_x509_cert_url: process.env.AUTH_PROVIDER_BUCKET,
-    client_x509_cert_url: process.env.CLIENT_URL_BUCKET,
-    universe_domain: process.env.UNIVERSE_DOMAIN_BUCKET,
+  type: process.env.TYPE_BUCKET,
+  project_id: process.env.PROJECT_ID_BUCKET,
+  private_key_id: process.env.PRIVATE_KEY_ID_BUCKET,
+  private_key: process.env.PRIVATE_KEY_BUCKET,
+  client_email: process.env.CLIENT_MAIL_BUCKET,
+  client_id: process.env.CLIENT_ID_BUCKET,
+  auth_uri: process.env.AUTH_URI_BUCKET,
+  token_uri: process.env.TOKEN_URI_BUCKET,
+  auth_provider_x509_cert_url: process.env.AUTH_PROVIDER_BUCKET,
+  client_x509_cert_url: process.env.CLIENT_URL_BUCKET,
+  universe_domain: process.env.UNIVERSE_DOMAIN_BUCKET,
 };
 
 const gc = new Storage({
@@ -25,4 +25,4 @@ const gc = new Storage({
 // check connect to bucket
 // gc.getBuckets().then(x => console.log(x));
 
-module.exports = { gc };
+module.exports = { gc, STORAGE_PROJECT_KEY };

@@ -9,6 +9,38 @@ const {
   parseSymbols,
   parseSymbolsAndNormalize,
 } = require('./middlewares/parseStringMiddleware');
+const { db } = require('./config/firestore');
+
+const sendToDb = async () => {
+  const docRef = db.collection('users').doc('alovelace');
+
+  await docRef.set({
+    first: 'Ada',
+    last: 'Lovelace',
+    born: 1815,
+  });
+
+  // other collection
+  const aTuringRef = db.collection('users').doc('aturing');
+
+  await aTuringRef.set({
+    first: 'Alan',
+    middle: 'Mathison',
+    last: 'Turing',
+    born: 1912,
+  });
+};
+
+// sendToDb();
+
+const readFromDb = async () => {
+  const snapshot = await db.collection('users').get();
+  snapshot.forEach(doc => {
+    console.log(doc.id, '=>', doc.data());
+  });
+};
+
+// readFromDb()
 
 const app = express();
 
@@ -91,11 +123,11 @@ bot.on('webhook_error', error => {
 });
 
 app.post('/check-chat-content', async (req, res) => {
-// 
-// 1. записати в базу даних рядок про те що користувач відправив оголошення
-// 2. перевірити в базі даних останняй запис цього користувача
-// 3. сформувати статистичні дані про розміщені оголошеня і намалювати їх у кабінеті адміністратора
-// 
+  //
+  // 1. записати в базу даних рядок про те що користувач відправив оголошення
+  // 2. перевірити в базі даних останняй запис цього користувача
+  // 3. сформувати статистичні дані про розміщені оголошеня і намалювати їх у кабінеті адміністратора
+  //
   const { queryId } = req.body;
   console.log(queryId);
 
