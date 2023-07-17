@@ -5,6 +5,7 @@
 - [Using self-signed certificates](https://core.telegram.org/bots/self-signed/)
 - [Marvin's Marvellous Guide to All Things Webhook](https://core.telegram.org/bots/webhooks)
 - [listen multiple bot](https://github.com/yagop/node-telegram-bot-api/issues/446)
+- [getUpdates](https://core.telegram.org/bots/api#getupdates)
 
 - [bots/webapps](https://core.telegram.org/api/bots/webapps)
 - [bots/payments](https://core.telegram.org/bots/payments)

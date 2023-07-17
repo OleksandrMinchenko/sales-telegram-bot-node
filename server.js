@@ -37,6 +37,7 @@ app.listen(PORT, () => {
 const token = process.env.TOKEN;
 const urlReact = process.env.URL_REACT;
 const urlNode = process.env.URL_NODE;
+const channelId = process.env.CHANNEL_ID;
 // console.log(
 //   'check ===>',
 //   `https://api.telegram.org/bot${token}/getWebhookInfo`
@@ -89,9 +90,22 @@ bot.on('webhook_error', error => {
   console.log('bot_webhook_error', error.message);
 });
 
-app.get('/check-chat-content', async (req, res) => {
+app.post('/check-chat-content', async (req, res) => {
+// 
+// 1. записати в базу даних рядок про те що користувач відправив оголошення
+// 2. перевірити в базі даних останняй запис цього користувача
+// 3. сформувати статистичні дані про розміщені оголошеня і намалювати їх у кабінеті адміністратора
+// 
   const { queryId } = req.body;
-  res.status(200).send({ queryId });
+  console.log(queryId);
+
+  const link = `https://api.telegram.org/bot${token}/getUpdates`; //?chat_id=${channelId}
+  console.log(link);
+
+  const result = await bot.getUpdates();
+
+  console.log(result);
+  res.status(200).send({ queryId, link, result });
 });
 
 app.post('/web-data-sale', async (req, res) => {
@@ -100,7 +114,7 @@ app.post('/web-data-sale', async (req, res) => {
   // console.log('inside web-data =====>>>>> ');
 
   // await bot.sendMessage(
-  //   process.env.CHANNEL_ID,
+  //   channelId,
   //   `\*${title}* \n${description} \n${cost}грн \n${contact}`,
   //   { parse_mode: 'MarkdownV2' } // or HTML
   // );
@@ -127,7 +141,7 @@ app.post('/web-data-sale', async (req, res) => {
   });
 
   try {
-    await bot.sendMediaGroup(process.env.CHANNEL_ID, arrayPhoto);
+    await bot.sendMediaGroup(channelId, arrayPhoto);
 
     res.status(200).send({ ...req.body, sendToTelegram: arrayPhoto });
   } catch (error) {
@@ -154,7 +168,7 @@ app.post('/web-data-buy', async (req, res) => {
   )}\n\*Зв'язок:* ${parseSymbols(contact)}`;
 
   try {
-    await bot.sendMessage(process.env.CHANNEL_ID, myMessage, {
+    await bot.sendMessage(channelId, myMessage, {
       parse_mode: 'MarkdownV2',
     });
 
