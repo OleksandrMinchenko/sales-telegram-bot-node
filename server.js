@@ -9,38 +9,7 @@ const {
   parseSymbols,
   parseSymbolsAndNormalize,
 } = require('./middlewares/parseStringMiddleware');
-const { db } = require('./config/firestore');
-
-const sendToDb = async () => {
-  const docRef = db.collection('users').doc('alovelace');
-
-  await docRef.set({
-    first: 'Ada',
-    last: 'Lovelace',
-    born: 1815,
-  });
-
-  // other collection
-  const aTuringRef = db.collection('users').doc('aturing');
-
-  await aTuringRef.set({
-    first: 'Alan',
-    middle: 'Mathison',
-    last: 'Turing',
-    born: 1912,
-  });
-};
-
-// sendToDb();
-
-const readFromDb = async () => {
-  const snapshot = await db.collection('users').get();
-  snapshot.forEach(doc => {
-    console.log(doc.id, '=>', doc.data());
-  });
-};
-
-// readFromDb()
+const { writeToDb, readFromDb } = require('./services/user');
 
 const app = express();
 
@@ -128,20 +97,27 @@ app.post('/check-chat-content', async (req, res) => {
   // 2. перевірити в базі даних останняй запис цього користувача
   // 3. сформувати статистичні дані про розміщені оголошеня і намалювати їх у кабінеті адміністратора
   //
-  const { queryId } = req.body;
-  console.log(queryId);
 
-  const link = `https://api.telegram.org/bot${token}/getUpdates`; //?chat_id=${channelId}
-  console.log(link);
+  const { userId, title, description, cost, contact, queryId, photoURL } =
+    req.body;
+  const data = {
+    userId,
+    title,
+    description,
+    cost,
+    contact,
+    queryId,
+    photoURL,
+    type: 'sale',
+    payment: false,
+  };
+  await writeToDb(data);
 
-  const result = await bot.getUpdates();
-
-  console.log(result);
-  res.status(200).send({ queryId, link, result });
+  res.status(200).send(data);
 });
 
 app.post('/web-data-sale', async (req, res) => {
-  const { title, description, cost, contact, queryId, photoURL } = req.body;
+  const { userId, title, description, cost, contact, queryId, photoURL } = req.body;
   console.log('inside web-data =====>>>>> ', photoURL);
   // console.log('inside web-data =====>>>>> ');
 
@@ -174,6 +150,18 @@ app.post('/web-data-sale', async (req, res) => {
 
   try {
     await bot.sendMediaGroup(channelId, arrayPhoto);
+    const data = {
+      userId,
+      title,
+      description,
+      cost,
+      contact,
+      queryId,
+      photoURL,
+      type: 'sale',
+      payment: false,
+    };
+    await writeToDb(data);
 
     res.status(200).send({ ...req.body, sendToTelegram: arrayPhoto });
   } catch (error) {
