@@ -116,8 +116,15 @@ app.post('/check-chat-content', async (req, res) => {
   res.status(200).send(data);
 });
 
+// app.post('/check-base', async (req, res) => {
+//   await readFromDb();
+
+//   res.status(200).send({});
+// });
+
 app.post('/web-data-sale', async (req, res) => {
-  const { userId, title, description, cost, contact, queryId, photoURL } = req.body;
+  const { title, description, cost, contact, user, queryId, photoURL } =
+    req.body;
   console.log('inside web-data =====>>>>> ', photoURL);
   // console.log('inside web-data =====>>>>> ');
 
@@ -126,6 +133,18 @@ app.post('/web-data-sale', async (req, res) => {
   //   `\*${title}* \n${description} \n${cost}грн \n${contact}`,
   //   { parse_mode: 'MarkdownV2' } // or HTML
   // );
+
+  const dataForDb = {
+    user: user ? user : 'anonym',
+    title,
+    description,
+    cost,
+    contact,
+    photoURL,
+    type: 'sale',
+    payment: false,
+  };
+  console.log('inside web-data - dataForDb =====>>>>> ', dataForDb);
 
   const myCaption = `\*${parseSymbolsAndNormalize(
     title
@@ -150,20 +169,12 @@ app.post('/web-data-sale', async (req, res) => {
 
   try {
     await bot.sendMediaGroup(channelId, arrayPhoto);
-    const data = {
-      userId,
-      title,
-      description,
-      cost,
-      contact,
-      queryId,
-      photoURL,
-      type: 'sale',
-      payment: false,
-    };
-    await writeToDb(data);
 
-    res.status(200).send({ ...req.body, sendToTelegram: arrayPhoto });
+    const time = await writeToDb(dataForDb);
+
+    res
+      .status(200)
+      .send({ ...req.body, sendToTelegram: arrayPhoto, sendToDb: time });
   } catch (error) {
     await bot.answerWebAppQuery(queryId, {
       type: 'article',
