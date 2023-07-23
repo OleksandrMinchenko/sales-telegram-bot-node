@@ -4,6 +4,7 @@ const router = express.Router();
 const {
   checkOnePhotoSendCloud,
   checkSomePhotosSendCloud,
+  checkSomePhotosSendCloudByAdmin,
 } = require('../services/photo');
 
 const {
@@ -23,6 +24,13 @@ router.post(
   multerMid.array('photos', 5),
   multerErrorHandling,
   checkSomePhotosSendCloud
+);
+
+router.post(
+  '/some-by-admin',
+  multerMid.array('photos', 5),
+  multerErrorHandling,
+  checkSomePhotosSendCloudByAdmin
 );
 
 module.exports = { notifyRoutes: router };

@@ -9,7 +9,7 @@ const {
   parseSymbols,
   parseSymbolsAndNormalize,
 } = require('./middlewares/parseStringMiddleware');
-const { writeToDb, readFromDb } = require('./services/user');
+const { writeToDb } = require('./services/user');
 
 const app = express();
 
@@ -91,48 +91,9 @@ bot.on('webhook_error', error => {
   console.log('bot_webhook_error', error.message);
 });
 
-app.post('/check-chat-content', async (req, res) => {
-  //
-  // 1. записати в базу даних рядок про те що користувач відправив оголошення
-  // 2. перевірити в базі даних останняй запис цього користувача
-  // 3. сформувати статистичні дані про розміщені оголошеня і намалювати їх у кабінеті адміністратора
-  //
-
-  const { userId, title, description, cost, contact, queryId, photoURL } =
-    req.body;
-  const data = {
-    userId,
-    title,
-    description,
-    cost,
-    contact,
-    queryId,
-    photoURL,
-    type: 'sale',
-    payment: false,
-  };
-  await writeToDb(data);
-
-  res.status(200).send(data);
-});
-
-// app.post('/check-base', async (req, res) => {
-//   await readFromDb();
-
-//   res.status(200).send({});
-// });
-
 app.post('/web-data-sale', async (req, res) => {
   const { title, description, cost, contact, user, queryId, photoURL } =
     req.body;
-  console.log('inside web-data =====>>>>> ', photoURL);
-  // console.log('inside web-data =====>>>>> ');
-
-  // await bot.sendMessage(
-  //   channelId,
-  //   `\*${title}* \n${description} \n${cost}грн \n${contact}`,
-  //   { parse_mode: 'MarkdownV2' } // or HTML
-  // );
 
   const dataForDb = {
     user: user ? user : 'anonym',
@@ -144,7 +105,7 @@ app.post('/web-data-sale', async (req, res) => {
     type: 'sale',
     payment: false,
   };
-  console.log('inside web-data - dataForDb =====>>>>> ', dataForDb);
+  console.log('inside /web-data-sale - dataForDb =====>>>>> ', dataForDb);
 
   const myCaption = `\*${parseSymbolsAndNormalize(
     title
@@ -190,7 +151,17 @@ app.post('/web-data-sale', async (req, res) => {
 });
 
 app.post('/web-data-buy', async (req, res) => {
-  const { title, description, contact, queryId } = req.body;
+  const { title, description, contact, user, queryId } = req.body;
+
+  const dataForDb = {
+    user: user ? user : 'anonym',
+    title,
+    description,
+    contact,
+    type: 'buy',
+    payment: false,
+  };
+  console.log('inside /web-data-buy - dataForDb =====>>>>> ', dataForDb);
 
   const myMessage = `\*${parseSymbolsAndNormalize(
     title
@@ -203,7 +174,83 @@ app.post('/web-data-buy', async (req, res) => {
       parse_mode: 'MarkdownV2',
     });
 
-    res.status(200).send({ ...req.body, sendToTelegram: myMessage });
+    const time = await writeToDb(dataForDb);
+
+    res
+      .status(200)
+      .send({ ...req.body, sendToTelegram: myMessage, sendToDb: time });
+  } catch (error) {
+    await bot.answerWebAppQuery(queryId, {
+      type: 'article',
+      id: queryId,
+      title: 'Не вийшло відправити оголошення',
+      input_message_content: {
+        message_text: `Не вийшло відправити оголошення, спробуйте знову`,
+      },
+    });
+
+    res.status(500).send({ error });
+  }
+});
+
+// адмінські супер можливості
+app.post('/web-data-admin', async (req, res) => {
+  const {
+    title,
+    description,
+    cost,
+    contact,
+    user,
+    queryId,
+    photoURL,
+    type,
+    payment,
+  } = req.body;
+
+  const dataForDb = {
+    user: user ? user : 'anonym',
+    title,
+    description,
+    cost,
+    contact,
+    photoURL,
+    type,
+    payment,
+  };
+  console.log('inside /web-data-admin - dataForDb =====>>>>> ', dataForDb);
+
+  // написати умову в залежності від типу оголошення формувати різне повідомлення. З фото і без
+
+  const myCaption = `\*${parseSymbolsAndNormalize(
+    title
+  )}*\n\*Опис:* ${parseSymbolsAndNormalize(
+    description
+  )}\n\*Ціна:* ${cost} грн\n\*Зв'язок:* ${parseSymbols(contact)}`;
+
+  const arrayPhoto = photoURL.map((item, index) => {
+    if (index === 0) {
+      return {
+        type: 'photo',
+        media: photoURL[index],
+        caption: myCaption,
+        parse_mode: 'MarkdownV2',
+      };
+    }
+
+    return {
+      type: 'photo',
+      media: photoURL[index],
+    };
+  });
+
+  try {
+    await bot.sendMediaGroup(channelId, arrayPhoto);
+
+    const time = await writeToDb(dataForDb);
+
+    res
+      .status(200)
+      .send({ ...req.body, sendToTelegram: arrayPhoto, sendToDb: time });
   } catch (error) {
     await bot.answerWebAppQuery(queryId, {
       type: 'article',

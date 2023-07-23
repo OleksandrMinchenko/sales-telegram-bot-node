@@ -38,7 +38,27 @@ const checkSomePhotosSendCloud = async (req, res) => {
   }
 };
 
+const checkSomePhotosSendCloudByAdmin = async (req, res) => {
+  const arrayPhotos = req.files;
+  try {
+    const unresolvedPromises = arrayPhotos.map(async item => {
+      const imageUrl = await uploadImage(item);
+      return imageUrl;
+    });
+
+    const result = await Promise.all(unresolvedPromises);
+
+    res.send({
+      status: 'Upload was successful',
+      result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   checkOnePhotoSendCloud,
   checkSomePhotosSendCloud,
+  checkSomePhotosSendCloudByAdmin,
 };
