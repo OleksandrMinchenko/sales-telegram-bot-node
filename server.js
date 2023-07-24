@@ -49,20 +49,21 @@ const channelId = process.env.CHANNEL_ID;
 // );
 
 const bot = new TelegramBot(token, { polling: true });
+let chatId
 
 bot.on('message', async msg => {
-  const chatId = msg.chat.id;
+  chatId = msg.chat.id;
   const text = msg.text;
   console.log('message bot===>', 'я тут');
 
   if (text === '/start') {
-    await bot.sendMessage(chatId, 'Відправити оголошення', {
-      reply_markup: {
-        inline_keyboard: [
-          [{ text: 'Заповнити форму', web_app: { url: urlReact } }],
-        ],
-      },
-    });
+    // await bot.sendMessage(chatId, 'Відправити оголошення', {
+    //   reply_markup: {
+    //     inline_keyboard: [
+    //       [{ text: 'Заповнити форму', web_app: { url: urlReact } }],
+    //     ],
+    //   },
+    // });
   }
 
   // console.log('before check data ===>');
@@ -128,10 +129,30 @@ app.post('/web-data-sale', async (req, res) => {
     };
   });
 
+  const mySuccessMsg = `Оголошення \*${parseSymbolsAndNormalize(
+    title
+  )}...* опубліковано.\nСподіваємось що скоро ви досягненте своєї мети.\nДякуємо за довіру!`;
+
   try {
     await bot.sendMediaGroup(channelId, arrayPhoto);
 
     const time = await writeToDb(dataForDb);
+    //
+    await bot.answerWebAppQuery(
+      queryId,
+      {
+        type: 'article',
+        id: queryId,
+        title: 'Оголошення опубліковано',
+        input_message_content: {
+          message_text: mySuccessMsg,
+        },
+      },
+      {
+        parse_mode: 'MarkdownV2',
+      }
+    );
+    //
 
     res
       .status(200)
@@ -169,12 +190,36 @@ app.post('/web-data-buy', async (req, res) => {
     description
   )}\n\*Зв'язок:* ${parseSymbols(contact)}`;
 
+  const mySuccessMsg = `Оголошення \*${parseSymbolsAndNormalize(
+    title
+  )}...* опубліковано.\nСподіваємось що скоро ви досягненте своєї мети.\nДякуємо за довіру!`;
+
   try {
     await bot.sendMessage(channelId, myMessage, {
       parse_mode: 'MarkdownV2',
     });
 
     const time = await writeToDb(dataForDb);
+    //
+    // await bot.answerWebAppQuery(
+    //   queryId,
+    //   {
+    //     type: 'article',
+    //     id: queryId,
+    //     title: 'Оголошення опубліковано',
+    //     input_message_content: {
+    //       message_text: mySuccessMsg,
+    //     },
+    //   },
+    //   {
+    //     parse_mode: 'MarkdownV2',
+    //   }
+    // );
+    // const myChatID = '475321747';
+    await bot.sendMessage(chatId, mySuccessMsg, {
+      parse_mode: 'MarkdownV2',
+    });
+    //
 
     res
       .status(200)
