@@ -9,6 +9,13 @@ const {
   parseSymbols,
   parseSymbolsAndNormalize,
 } = require('./middlewares/parseStringMiddleware');
+const {
+  myFirstMsg,
+  mySuccessMsg,
+  myBuyMsg,
+  mySaleMsg,
+  myFailMsg,
+} = require('./helpers/messages');
 const { writeToDb } = require('./services/user');
 
 const app = express();
@@ -36,9 +43,9 @@ app.listen(PORT, () => {
 
 // =============== bot
 const token = process.env.TOKEN;
-const urlReact = process.env.URL_REACT;
-const urlNode = process.env.URL_NODE;
 const channelId = process.env.CHANNEL_ID;
+
+// const urlNode = process.env.URL_NODE;
 // console.log(
 //   'check ===>',
 //   `https://api.telegram.org/bot${token}/getWebhookInfo`
@@ -49,39 +56,21 @@ const channelId = process.env.CHANNEL_ID;
 // );
 
 const bot = new TelegramBot(token, { polling: true });
-let chatId
 
 bot.on('message', async msg => {
-  chatId = msg.chat.id;
+  const chatId = msg.chat.id;
   const text = msg.text;
   console.log('message bot===>', 'я тут');
 
   if (text === '/start') {
-    // await bot.sendMessage(chatId, 'Відправити оголошення', {
-    //   reply_markup: {
-    //     inline_keyboard: [
-    //       [{ text: 'Заповнити форму', web_app: { url: urlReact } }],
-    //     ],
-    //   },
-    // });
+    try {
+      await bot.sendMessage(chatId, myFirstMsg(), {
+        parse_mode: 'MarkdownV2',
+      });
+    } catch (error) {
+      console.log('/start sendMessage error ====== >', error);
+    }
   }
-
-  // console.log('before check data ===>');
-
-  // if (msg?.web_app_data?.data) {
-  //   try {
-  //     await bot.sendMessage(chatId, 'Дякуємо');
-  //     const data = msg.web_app_data.data;
-
-  //     console.log('data =====>', data);
-  //     const formData = JSON.parse(data);
-  //     const notify = `${formData?.title}, ${formData?.description}, ${formData?.cost}, ${formData?.contact}`;
-
-  //     await bot.sendMessage(chatId, notify);
-  //   } catch (error) {
-  //     console.log('msg?.web_app_data?.data ===>', error);
-  //   }
-  // }
 });
 
 bot.on('polling_error', error => {
@@ -108,18 +97,12 @@ app.post('/web-data-sale', async (req, res) => {
   };
   console.log('inside /web-data-sale - dataForDb =====>>>>> ', dataForDb);
 
-  const myCaption = `\*${parseSymbolsAndNormalize(
-    title
-  )}*\n\*Опис:* ${parseSymbolsAndNormalize(
-    description
-  )}\n\*Ціна:* ${cost} грн\n\*Зв'язок:* ${parseSymbols(contact)}`;
-
   const arrayPhoto = photoURL.map((item, index) => {
     if (index === 0) {
       return {
         type: 'photo',
         media: photoURL[index],
-        caption: myCaption,
+        caption: mySaleMsg(title, description, cost, contact),
         parse_mode: 'MarkdownV2',
       };
     }
@@ -129,30 +112,20 @@ app.post('/web-data-sale', async (req, res) => {
     };
   });
 
-  const mySuccessMsg = `Оголошення \*${parseSymbolsAndNormalize(
-    title
-  )}...* опубліковано.\nСподіваємось що скоро ви досягненте своєї мети.\nДякуємо за довіру!`;
-
   try {
     await bot.sendMediaGroup(channelId, arrayPhoto);
 
     const time = await writeToDb(dataForDb);
-    //
-    await bot.answerWebAppQuery(
-      queryId,
-      {
-        type: 'article',
-        id: queryId,
-        title: 'Оголошення опубліковано',
-        input_message_content: {
-          message_text: mySuccessMsg,
-        },
+
+    await bot.answerWebAppQuery(queryId, {
+      type: 'article',
+      id: queryId,
+      title: 'Оголошення опубліковано',
+      input_message_content: {
+        message_text: mySuccessMsg(title),
+        parse_mode: 'Markdown',
       },
-      {
-        parse_mode: 'MarkdownV2',
-      }
-    );
-    //
+    });
 
     res
       .status(200)
@@ -163,7 +136,8 @@ app.post('/web-data-sale', async (req, res) => {
       id: queryId,
       title: 'Не вийшло відправити оголошення',
       input_message_content: {
-        message_text: `Не вийшло відправити оголошення, спробуйте знову`,
+        message_text: myFailMsg(),
+        parse_mode: 'Markdown',
       },
     });
 
@@ -184,42 +158,22 @@ app.post('/web-data-buy', async (req, res) => {
   };
   console.log('inside /web-data-buy - dataForDb =====>>>>> ', dataForDb);
 
-  const myMessage = `\*${parseSymbolsAndNormalize(
-    title
-  )}*\n\*Опис:* ${parseSymbolsAndNormalize(
-    description
-  )}\n\*Зв'язок:* ${parseSymbols(contact)}`;
-
-  const mySuccessMsg = `Оголошення \*${parseSymbolsAndNormalize(
-    title
-  )}...* опубліковано.\nСподіваємось що скоро ви досягненте своєї мети.\nДякуємо за довіру!`;
-
   try {
-    await bot.sendMessage(channelId, myMessage, {
+    await bot.sendMessage(channelId, myBuyMsg(title, description, contact), {
       parse_mode: 'MarkdownV2',
     });
 
     const time = await writeToDb(dataForDb);
-    //
-    // await bot.answerWebAppQuery(
-    //   queryId,
-    //   {
-    //     type: 'article',
-    //     id: queryId,
-    //     title: 'Оголошення опубліковано',
-    //     input_message_content: {
-    //       message_text: mySuccessMsg,
-    //     },
-    //   },
-    //   {
-    //     parse_mode: 'MarkdownV2',
-    //   }
-    // );
-    // const myChatID = '475321747';
-    await bot.sendMessage(chatId, mySuccessMsg, {
-      parse_mode: 'MarkdownV2',
+
+    await bot.answerWebAppQuery(queryId, {
+      type: 'article',
+      id: queryId,
+      title: 'Оголошення опубліковано',
+      input_message_content: {
+        message_text: mySuccessMsg(title),
+        parse_mode: 'Markdown',
+      },
     });
-    //
 
     res
       .status(200)
@@ -230,7 +184,8 @@ app.post('/web-data-buy', async (req, res) => {
       id: queryId,
       title: 'Не вийшло відправити оголошення',
       input_message_content: {
-        message_text: `Не вийшло відправити оголошення, спробуйте знову`,
+        message_text: myFailMsg(),
+        parse_mode: 'Markdown',
       },
     });
 

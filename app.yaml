@@ -1,7 +1,6 @@
 runtime: nodejs16
 
 env_variables:
-  URL_REACT: 'https://smisyuk4.github.io/sales-telegram-bot-react'
   URL_NODE: 'https://telegram-bot-d339c.ew.r.appspot.com'
 
   ######## telegram - cat
