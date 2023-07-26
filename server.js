@@ -46,13 +46,22 @@ const token = process.env.TOKEN;
 const channelId = process.env.CHANNEL_ID;
 
 // const urlNode = process.env.URL_NODE;
+// check
 // console.log(
 //   'check ===>',
 //   `https://api.telegram.org/bot${token}/getWebhookInfo`
 // );
+
+// set
 // console.log(
 //   'activate ===>',
 //   `https://api.telegram.org/bot${token}/setWebhook?url=${urlNode}`
+// );
+
+// remove
+// console.log(
+//   'activate ===>',
+//   `https://api.telegram.org/bot${token}/setWebhook`
 // );
 
 const bot = new TelegramBot(token, { polling: true });
@@ -60,7 +69,7 @@ const bot = new TelegramBot(token, { polling: true });
 bot.on('message', async msg => {
   const chatId = msg.chat.id;
   const text = msg.text;
-  console.log('message bot===>', 'я тут');
+  console.log('message by bot_id = ', token);
 
   if (text === '/start') {
     try {
@@ -159,12 +168,15 @@ app.post('/web-data-buy', async (req, res) => {
   console.log('inside /web-data-buy - dataForDb =====>>>>> ', dataForDb);
 
   try {
+    console.log('inside send, channelId = ', channelId);
     await bot.sendMessage(channelId, myBuyMsg(title, description, contact), {
       parse_mode: 'MarkdownV2',
     });
 
+    console.log('inside send, time');
     const time = await writeToDb(dataForDb);
 
+    console.log('inside send, answerWebAppQuery');
     await bot.answerWebAppQuery(queryId, {
       type: 'article',
       id: queryId,
