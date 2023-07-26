@@ -3,16 +3,21 @@ runtime: nodejs16
 env_variables:
   URL_NODE: 'https://telegram-bot-d339c.ew.r.appspot.com'
 
-  ######## telegram - cat
-  TOKEN: '6206316223:AAHAaymyCbUiNsNYHYwRscSLM0ENWGTVwTk'
-  CHANNEL_ID: '-1001609248620'
+  TOKEN: '6206316223:AAHAaymyCbUiNsNYHYwRscSLM0ENWGTVwTk' # bot - cat_gm_bot
+  CHANNEL_ID: '-1001721205891' # production_buy_sale
+
+  # TOKEN: '6560870359:AAE3hK_1va0zpHNxIGvdDOSr0G_2KPkJyn4' # bot - dev_test_july_bot
+  # CHANNEL_ID: '-1001609248620' # sales_test_ser or dev/test channel
 
   ######## vision & cloud server
   PORT: '8080'
   TYPE: 'service_account'
   PROJECT_ID: 'telegram-bot-d339c'
   PRIVATE_KEY_ID: '637388e666930e09506ad52ed5a5508720eb45dc'
-  PRIVATE_KEY: "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQClagt55ZA/Rwcf\n9CnECLfXa9ziGCOxmZFZ6L6ZNzIfVt+YuAe0hstmBwKg9J1mrIzkXQ8HmoFGf3uS\nqJPFj3eOWFk8801ed82oIlU/EkAVk1K6t3NdMAD4M54HIHTh52a+Lq0wcFvHgcYu\nM0J5+fRIyt5Kl0TGdYro7PI/hcGC/VUw3sr88s9c/346nSRLUa4AiLu3frl4X+r/\nTkpGJpuqMww0ldargGM8IeNKck5jJv+vS3FwfkIC/+LVOKPxAlSwf79Xdd4zGVK3\nu7GN01NOL4slCVmJJ93+6GKX5r3WbcCaaUH5Rupj9Sjzp7VuX4QegwZNzkzpsLR9\nkfjsTq4DAgMBAAECggEAJgR578G1xf1Wo170LHSOgEnvod1Hct2nPQFTsRYxBGfs\niwac6r5iSChLT9/4vyzgUuoadrZpiODq71mkYO8o3MPseqg2u4QQddiyPAU/SlYq\nWPSp5JyQVHtUkjHA+1y6TfKfZnckePWYLW0llbA/l21c6sraiTxhuUggIz5kK+0b\ncI/vMkt4YOy/zO4BUQMeX5sWZc1l/QPrLrM59vc3xR6z3xeVKcE4ePN32quJW7eB\nqLDbnF0rbFPfGeFYw+rji0vy3ObZ6umStZ+Ukk2X96dFI3OnNkNgWjK+dqOm3uqr\nWzJaTZJhXSUeyATL6zMK5GfFMR6VXSsqU/YCGqZYiQKBgQDmfADFEGXIParjOt75\npwMxSht+6HBf1Ke/82aZlzS5fdqisctPrKX08Cdgv5Se9Ba/Mj4cqEIjE4v/JboQ\nmsUXf5I+f2CMrWfJ/mBhEEBietxxObAi7GmXB79VneUlkB63SAibefGxhAJPdFm1\ntSW9IKGIyCQPvKJA7P9ZteflqwKBgQC3ue8miy3HtnA8pLu9j+mk68TTWfdzqWFv\nWc6cKFoDV+f8GFjNwrCeAFBkraq0rDmwnYFfrDiOKi1F2Wpj9wadcagUvpgn07I0\nDk43PsNU8Z/KQYm5ptZZkO/qmJEqxxgXumFOAoD2SwotetvjzKcRTGhKj9uajAMD\nZgJpOPXRCQKBgHEMp5ABD/tcjAIycQXA7mbxs3TW66+FbdZPu6ZgLQNCgMfGLzPg\nOfJfDOF+dpZUoQeczCxgNzhfMQ6v4YidcUiqUQAImEHIGB1SgNF7GCl1m8SJiCRJ\nEy16JlYHQUrgWsCJO3ePI4ZvenagWhQvSthuNe0SReXWHzt7Q3AsMhdLAoGBAJEL\nhkUcnbDMVAFcYCcAZYlg5MuifBvgvd5lvRpFNQLstGWuZvVSXZLvVoiVHm5yhTzs\nq8V3NlLt8z3wrfBrhdpobzSpX4AZvdcg8BjnQNhfxTGs2ekqUJD3PqErf3eRJHEf\nIFCw41UN2uQa2VwXJlIeyzsKJWn2XS6iqwadBFvZAoGAO/OpJu+RESsgRmZb8bbn\nuPXQXKzLk8u6GKk6L29KMfR6t9oZmeRBq6dPpiOY+zuwfudvFAce09ycaFVH2o+n\nRULBXXjcBkm33DYvp6HB+jCRdnBD505OV0BhMRz4vobNTH2Hn7H4Y+OXupMoe6yr\nkhubEKs36Rtdu/W+oaAUBVI=\n-----END PRIVATE KEY-----\n"
+  PRIVATE_KEY:
+    "-----BEGIN PRIVATE
+    KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQClagt55ZA/Rwcf\n9CnECLfXa9ziGCOxmZFZ6L6ZNzIfVt+YuAe0hstmBwKg9J1mrIzkXQ8HmoFGf3uS\nqJPFj3eOWFk8801ed82oIlU/EkAVk1K6t3NdMAD4M54HIHTh52a+Lq0wcFvHgcYu\nM0J5+fRIyt5Kl0TGdYro7PI/hcGC/VUw3sr88s9c/346nSRLUa4AiLu3frl4X+r/\nTkpGJpuqMww0ldargGM8IeNKck5jJv+vS3FwfkIC/+LVOKPxAlSwf79Xdd4zGVK3\nu7GN01NOL4slCVmJJ93+6GKX5r3WbcCaaUH5Rupj9Sjzp7VuX4QegwZNzkzpsLR9\nkfjsTq4DAgMBAAECggEAJgR578G1xf1Wo170LHSOgEnvod1Hct2nPQFTsRYxBGfs\niwac6r5iSChLT9/4vyzgUuoadrZpiODq71mkYO8o3MPseqg2u4QQddiyPAU/SlYq\nWPSp5JyQVHtUkjHA+1y6TfKfZnckePWYLW0llbA/l21c6sraiTxhuUggIz5kK+0b\ncI/vMkt4YOy/zO4BUQMeX5sWZc1l/QPrLrM59vc3xR6z3xeVKcE4ePN32quJW7eB\nqLDbnF0rbFPfGeFYw+rji0vy3ObZ6umStZ+Ukk2X96dFI3OnNkNgWjK+dqOm3uqr\nWzJaTZJhXSUeyATL6zMK5GfFMR6VXSsqU/YCGqZYiQKBgQDmfADFEGXIParjOt75\npwMxSht+6HBf1Ke/82aZlzS5fdqisctPrKX08Cdgv5Se9Ba/Mj4cqEIjE4v/JboQ\nmsUXf5I+f2CMrWfJ/mBhEEBietxxObAi7GmXB79VneUlkB63SAibefGxhAJPdFm1\ntSW9IKGIyCQPvKJA7P9ZteflqwKBgQC3ue8miy3HtnA8pLu9j+mk68TTWfdzqWFv\nWc6cKFoDV+f8GFjNwrCeAFBkraq0rDmwnYFfrDiOKi1F2Wpj9wadcagUvpgn07I0\nDk43PsNU8Z/KQYm5ptZZkO/qmJEqxxgXumFOAoD2SwotetvjzKcRTGhKj9uajAMD\nZgJpOPXRCQKBgHEMp5ABD/tcjAIycQXA7mbxs3TW66+FbdZPu6ZgLQNCgMfGLzPg\nOfJfDOF+dpZUoQeczCxgNzhfMQ6v4YidcUiqUQAImEHIGB1SgNF7GCl1m8SJiCRJ\nEy16JlYHQUrgWsCJO3ePI4ZvenagWhQvSthuNe0SReXWHzt7Q3AsMhdLAoGBAJEL\nhkUcnbDMVAFcYCcAZYlg5MuifBvgvd5lvRpFNQLstGWuZvVSXZLvVoiVHm5yhTzs\nq8V3NlLt8z3wrfBrhdpobzSpX4AZvdcg8BjnQNhfxTGs2ekqUJD3PqErf3eRJHEf\nIFCw41UN2uQa2VwXJlIeyzsKJWn2XS6iqwadBFvZAoGAO/OpJu+RESsgRmZb8bbn\nuPXQXKzLk8u6GKk6L29KMfR6t9oZmeRBq6dPpiOY+zuwfudvFAce09ycaFVH2o+n\nRULBXXjcBkm33DYvp6HB+jCRdnBD505OV0BhMRz4vobNTH2Hn7H4Y+OXupMoe6yr\nkhubEKs36Rtdu/W+oaAUBVI=\n-----END
+    PRIVATE KEY-----\n"
   CLIENT_EMAIL: 'telegram-bot-d339c@appspot.gserviceaccount.com'
   CLIENT_ID: '116881675100120767139'
   AUTH_URI: 'https://accounts.google.com/o/oauth2/auth'
@@ -23,14 +28,17 @@ env_variables:
 
   ######## cloud storage
   BUCKET_NAME: 'photo-for-sales-chanel'
-  TYPE_BUCKET: "service_account"
-  PROJECT_ID_BUCKET: "telegram-bot-d339c"
-  PRIVATE_KEY_ID_BUCKET: "c8ebab003e752cfad6a6a32ec040e343701752d9"
-  PRIVATE_KEY_BUCKET: "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCFU4YZqEvsynRi\nMZPtwyNCty+DrniiyOAbu8HxE3L0rAX6thijTKHfE7q7FolqB/HEdVxRiRMjQLrY\nTaNwL1xq2t97uYFZeGrfeFnDmgAjGkH5Mm0D7MMaf1HZkR9CxaaRwfcFBEzPHPeA\nXuTRK67EpFMAUpLQtTEpC/46k0V/ayzSYVtrldRdqLW+IHnIJ2x3QQp3sGmy0fB/\n23/jWGpYsud0qr795m3vx1olmJy9a3FW7VNw0/K2Rex0bngndnsCFv3RkQq/NrY6\nvxkAeNe//HcKozSGxAxNTEYMfE0Ls+RgmHt0KReCFnie+loEoJDgXLABt/kconAf\nnf1nrLopAgMBAAECggEAJW7wgUar3pVvPNyfpIt73HDzYbz8OPQ+W/sI9mdYCNM9\nsIks/Lh44Fm5PWsT9NW7L0YmP+xFF8pGS5Hs2AQsJgJC6gmJBDZXh1vSlCUqcbCf\nIljim83/b3Kc6AGjbctxu43ijaGJ8UK4SO4bv5DMtoBOn5IPj5K39UbdP9P2mNH2\nWusjjl0Xitya/OmomuzmbGrhGbJej8HCEyoL0Cn7TgKQ8zzIHFfXi2+z8t5Y0NnH\nrnlXNSdRWa39xT69mwnzeOOH8trduQbnBnsU8/YNzEctIWEYJnbkYyy2AHFiJWeP\nwcyElX7ZGHWsaztz/mc0gYCrOG7cFMd+AFR5APu76wKBgQC5Wu9Bh3WQRLUV4qVM\nVuJTtu4mrjLOW6gZj5EJ+LEq2eUbFAJaVGs5TvCeX/KrYxqdw61b2gIlIXoGyqp+\nkk+eQRonHjysZMmRdSIvY6eemgVPOpcjXZ4E92UdZbrkrkvNyDMkRdALAvwWp1Fe\nX+JSHVOZOzoDnjvQIOnFwNY/JwKBgQC4JCMCC3ZISSvADtZ1UGpCb6dos160A0lX\nGKLK3UsFesjxgZmJXm4YLhHdKVXWilO2gEsmgLKzhBGWG3PlTRACt3/JdQ1WHIi7\nUo+HjG2VhhaiWsuGmMMnRWpDKOrDB5qzRlQDkpxEP0nzp7vNvZ3A3sZhr8rao++s\nvAVbveUOLwKBgQCWEHQyJnxc7/N4I4XWd2VHh4vqDxCdF4HSJ/SyEQFHAyBEuv9o\nqH4i6LFQV7f9YAAViG3bNnaUHzVPOFeun8AMDQMido2CuRqkRCQIH/N+KY5w5aul\ne07LEIxxr4IPULmYgiQ9krPrpl/360CqWpC+EHY1UckXUs10JKF/dC9A8wKBgQCX\nrAQ94e0Ke2KS7mXM+XCcylTtE5l00qQtHjiwuffaSpmK+0HY+TPbrM7ACRUQAp4T\nW7cKvsTywlyt9GzQuVnvsu+Jo2VZwWUKTmW0s4FrwKeSERFFCzzrcuyk5uX/wJq3\nAb2ft7oJKMwj6svxGjb/Lz/eJKsEzjVTZQdQ2qf5twKBgQCsmH+HiZyCVje+RjHp\nsvR3yyQWso+WooOga8OfvRR9kZ8dEeR2ZQCujo4UCu3iwnMbNfzt83qUMaM/pgRM\nHTsD1jt6n2k6EDCojlQhLiKa0/hWEJruNT3Q+83Xg88HBV+Mk0G5kfcf4TKtBqnp\nWi904QDtlUYTjrCdNB1AtV2JWg==\n-----END PRIVATE KEY-----\n"
-  CLIENT_MAIL_BUCKET: "serg-load-photo@telegram-bot-d339c.iam.gserviceaccount.com"
-  CLIENT_ID_BUCKET: "102132317221706984270"
-  AUTH_URI_BUCKET: "https://accounts.google.com/o/oauth2/auth"
-  TOKEN_URI_BUCKET: "https://oauth2.googleapis.com/token"
-  AUTH_PROVIDER_BUCKET: "https://www.googleapis.com/oauth2/v1/certs"
-  CLIENT_URL_BUCKET: "https://www.googleapis.com/robot/v1/metadata/x509/serg-load-photo%40telegram-bot-d339c.iam.gserviceaccount.com"
-  UNIVERSE_DOMAIN_BUCKET: "googleapis.com"
+  TYPE_BUCKET: 'service_account'
+  PROJECT_ID_BUCKET: 'telegram-bot-d339c'
+  PRIVATE_KEY_ID_BUCKET: 'c8ebab003e752cfad6a6a32ec040e343701752d9'
+  PRIVATE_KEY_BUCKET:
+    "-----BEGIN PRIVATE
+    KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCFU4YZqEvsynRi\nMZPtwyNCty+DrniiyOAbu8HxE3L0rAX6thijTKHfE7q7FolqB/HEdVxRiRMjQLrY\nTaNwL1xq2t97uYFZeGrfeFnDmgAjGkH5Mm0D7MMaf1HZkR9CxaaRwfcFBEzPHPeA\nXuTRK67EpFMAUpLQtTEpC/46k0V/ayzSYVtrldRdqLW+IHnIJ2x3QQp3sGmy0fB/\n23/jWGpYsud0qr795m3vx1olmJy9a3FW7VNw0/K2Rex0bngndnsCFv3RkQq/NrY6\nvxkAeNe//HcKozSGxAxNTEYMfE0Ls+RgmHt0KReCFnie+loEoJDgXLABt/kconAf\nnf1nrLopAgMBAAECggEAJW7wgUar3pVvPNyfpIt73HDzYbz8OPQ+W/sI9mdYCNM9\nsIks/Lh44Fm5PWsT9NW7L0YmP+xFF8pGS5Hs2AQsJgJC6gmJBDZXh1vSlCUqcbCf\nIljim83/b3Kc6AGjbctxu43ijaGJ8UK4SO4bv5DMtoBOn5IPj5K39UbdP9P2mNH2\nWusjjl0Xitya/OmomuzmbGrhGbJej8HCEyoL0Cn7TgKQ8zzIHFfXi2+z8t5Y0NnH\nrnlXNSdRWa39xT69mwnzeOOH8trduQbnBnsU8/YNzEctIWEYJnbkYyy2AHFiJWeP\nwcyElX7ZGHWsaztz/mc0gYCrOG7cFMd+AFR5APu76wKBgQC5Wu9Bh3WQRLUV4qVM\nVuJTtu4mrjLOW6gZj5EJ+LEq2eUbFAJaVGs5TvCeX/KrYxqdw61b2gIlIXoGyqp+\nkk+eQRonHjysZMmRdSIvY6eemgVPOpcjXZ4E92UdZbrkrkvNyDMkRdALAvwWp1Fe\nX+JSHVOZOzoDnjvQIOnFwNY/JwKBgQC4JCMCC3ZISSvADtZ1UGpCb6dos160A0lX\nGKLK3UsFesjxgZmJXm4YLhHdKVXWilO2gEsmgLKzhBGWG3PlTRACt3/JdQ1WHIi7\nUo+HjG2VhhaiWsuGmMMnRWpDKOrDB5qzRlQDkpxEP0nzp7vNvZ3A3sZhr8rao++s\nvAVbveUOLwKBgQCWEHQyJnxc7/N4I4XWd2VHh4vqDxCdF4HSJ/SyEQFHAyBEuv9o\nqH4i6LFQV7f9YAAViG3bNnaUHzVPOFeun8AMDQMido2CuRqkRCQIH/N+KY5w5aul\ne07LEIxxr4IPULmYgiQ9krPrpl/360CqWpC+EHY1UckXUs10JKF/dC9A8wKBgQCX\nrAQ94e0Ke2KS7mXM+XCcylTtE5l00qQtHjiwuffaSpmK+0HY+TPbrM7ACRUQAp4T\nW7cKvsTywlyt9GzQuVnvsu+Jo2VZwWUKTmW0s4FrwKeSERFFCzzrcuyk5uX/wJq3\nAb2ft7oJKMwj6svxGjb/Lz/eJKsEzjVTZQdQ2qf5twKBgQCsmH+HiZyCVje+RjHp\nsvR3yyQWso+WooOga8OfvRR9kZ8dEeR2ZQCujo4UCu3iwnMbNfzt83qUMaM/pgRM\nHTsD1jt6n2k6EDCojlQhLiKa0/hWEJruNT3Q+83Xg88HBV+Mk0G5kfcf4TKtBqnp\nWi904QDtlUYTjrCdNB1AtV2JWg==\n-----END
+    PRIVATE KEY-----\n"
+  CLIENT_MAIL_BUCKET: 'serg-load-photo@telegram-bot-d339c.iam.gserviceaccount.com'
+  CLIENT_ID_BUCKET: '102132317221706984270'
+  AUTH_URI_BUCKET: 'https://accounts.google.com/o/oauth2/auth'
+  TOKEN_URI_BUCKET: 'https://oauth2.googleapis.com/token'
+  AUTH_PROVIDER_BUCKET: 'https://www.googleapis.com/oauth2/v1/certs'
+  CLIENT_URL_BUCKET: 'https://www.googleapis.com/robot/v1/metadata/x509/serg-load-photo%40telegram-bot-d339c.iam.gserviceaccount.com'
+  UNIVERSE_DOMAIN_BUCKET: 'googleapis.com'
