@@ -91,3 +91,5 @@
 - [number-of-labels](https://stackoverflow.com/questions/45259002/google-cloud-vision-api-detects-different-number-of-labels)
 - [Detect Labels, Faces, and Landmarks in Images with the Cloud Vision API](https://www.cloudskillsboost.google/focuses/1841?parent=catalog)
 - [node-lemmatizer](https://www.npmjs.com/package/node-lemmatizer)
+
+- [cache_time](https://core.telegram.org/bots/api#answercallbackquery)

@@ -169,7 +169,7 @@ app.post('/web-data-buy', async (req, res) => {
 
   try {
     console.log('inside send, channelId = ', channelId);
-    
+
     await bot.sendMessage(channelId, myBuyMsg(title, description, contact), {
       parse_mode: 'MarkdownV2',
     });
@@ -187,6 +187,7 @@ app.post('/web-data-buy', async (req, res) => {
         parse_mode: 'Markdown',
       },
     });
+    // cache_time
 
     res
       .status(200)
