@@ -10,7 +10,7 @@ const multerMid = multer({
 
 const multerErrorHandling = (err, req, res, next) => {
   if (err instanceof multer.MulterError) {
-    res.status(400).send('Multer error: ' + err);
+    res.status(400).send('Multer error: ' + err.code);
   } else {
     next();
   }
