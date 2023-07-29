@@ -14,7 +14,6 @@ const checkContent = arr => {
   const newArr = fifthClean.split(' ');
   const mySet = new Set(newArr);
   const wordsFromImage = [...mySet];
-//   console.log('wordsFromImage', wordsFromImage);
 
   let triggerWord = null;
   const result = wordsFromImage.some(item => {
