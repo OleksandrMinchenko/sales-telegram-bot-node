@@ -1,4 +1,6 @@
-const { forbiddenValues } = require('./forbiddenValues');
+const { forbiddenEngWords } = require('./forbiddenEngWords');
+const { forbiddenCyrillicWords } = require('./forbiddenCyrillicWords');
+const arrRegex = [...forbiddenEngWords, ...forbiddenCyrillicWords];
 
 const checkContent = arr => {
   if (arr.length === 0) {
@@ -17,7 +19,7 @@ const checkContent = arr => {
 
   let triggerWord = null;
   const result = wordsFromImage.some(item => {
-    const resCheck = forbiddenValues.some(regex => {
+    const resCheck = arrRegex.some(regex => {
       if (regex.test(item)) {
         triggerWord = item;
         return true;

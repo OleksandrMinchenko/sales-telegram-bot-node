@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
+const { checkContent } = require('./helpers/checkContentWords');
 
 const { notifyRoutes } = require('./routes/notifyRoute');
 const {
@@ -11,6 +12,7 @@ const {
 } = require('./middlewares/parseStringMiddleware');
 const {
   myFirstMsg,
+  mySecondMsg,
   mySuccessMsg,
   myBuyMsg,
   mySaleMsg,
@@ -69,7 +71,6 @@ const bot = new TelegramBot(token, { polling: true });
 bot.on('message', async msg => {
   const chatId = msg.chat.id;
   const text = msg.text;
-  console.log('message by bot_id = ', token);
 
   if (text === '/start') {
     try {
@@ -78,6 +79,16 @@ bot.on('message', async msg => {
       });
     } catch (error) {
       console.log('/start sendMessage error ====== >', error);
+    }
+  }
+
+  if (text) {
+    try {
+      await bot.sendMessage(chatId, mySecondMsg(), {
+        parse_mode: 'MarkdownV2',
+      });
+    } catch (error) {
+      console.log('bot.on(message) sendMessage error ====== >', error);
     }
   }
 });
@@ -104,7 +115,6 @@ app.post('/web-data-sale', async (req, res) => {
     type: 'sale',
     payment: false,
   };
-  console.log('inside /web-data-sale - dataForDb =====>>>>> ', dataForDb);
 
   const arrayPhoto = photoURL.map((item, index) => {
     if (index === 0) {
@@ -165,19 +175,14 @@ app.post('/web-data-buy', async (req, res) => {
     type: 'buy',
     payment: false,
   };
-  console.log('inside /web-data-buy - dataForDb =====>>>>> ', dataForDb);
 
   try {
-    console.log('inside send, channelId = ', channelId);
-
     await bot.sendMessage(channelId, myBuyMsg(title, description, contact), {
       parse_mode: 'MarkdownV2',
     });
 
-    console.log('inside send, time');
     const time = await writeToDb(dataForDb);
 
-    console.log('inside send, answerWebAppQuery');
     await bot.answerWebAppQuery(queryId, {
       type: 'article',
       id: queryId,
@@ -187,7 +192,6 @@ app.post('/web-data-buy', async (req, res) => {
         parse_mode: 'Markdown',
       },
     });
-    // cache_time
 
     res
       .status(200)
@@ -283,3 +287,21 @@ app.use('/', (req, res) => {
   const pathToHomePage = path.join(__dirname, 'index.html');
   res.sendFile(pathToHomePage);
 });
+
+const arr = [
+  "Шприц 2 мл",
+  "Шприц 20 мл",
+  "Luer taper",
+  "Insulin",
+  "Medicine",
+  "insulin pen",
+  "Hypodermic needle",
+  "",
+  "Шприц инъекционный одноразового применения Medicare трехкомпонент. 5 мл с иглой",
+  "Retractable Tech Inc VanishPoint Tuberculin Syringes VanishPoint Tuberculin Syringe 1 mL 10151",
+  "Pharmacy",
+  "Catheter",
+  "Intramuscular injection"
+];
+
+console.log(checkContent(arr));

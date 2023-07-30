@@ -1,7 +1,7 @@
 // https://cloud.google.com/vision/docs/reference/rpc/google.cloud.vision.v1#google.cloud.vision.v1.SafeSearchAnnotation
 // https://cloud.google.com/vision/docs/reference/rpc/google.cloud.vision.v1#likelihood
 
-const { safeDesc } = require('../helpers/forbiddenValues');
+const { safeDesc } = require('../helpers/forbiddenEngWords');
 const { checkContent } = require('../helpers/checkContentWords');
 const { client } = require('../config/vision');
 
@@ -63,7 +63,7 @@ const visionCheck = async imagePath => {
     }
 
     const { webEntities, pagesWithMatchingImages } = result.webDetection;
-    
+
     if (webEntities.length !== 0) {
       webDesc = webEntities.map(item => item.description);
       const resultWebDesc = checkContent(webDesc);
