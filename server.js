@@ -82,15 +82,15 @@ bot.on('message', async msg => {
     }
   }
 
-  if (text) {
-    try {
-      await bot.sendMessage(chatId, mySecondMsg(), {
-        parse_mode: 'MarkdownV2',
-      });
-    } catch (error) {
-      console.log('bot.on(message) sendMessage error ====== >', error);
-    }
-  }
+//  if (text) {
+   // try {
+     // await bot.sendMessage(chatId, mySecondMsg(), {
+      //  parse_mode: 'MarkdownV2',
+     // });
+  //  } catch (error) {
+   //   console.log('bot.on(message) sendMessage error ====== >', error);
+ //   }
+ // }
 });
 
 bot.on('polling_error', error => {
