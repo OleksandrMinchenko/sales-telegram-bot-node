@@ -17,7 +17,7 @@ const mySecondMsg = () => {
 const mySuccessMsg = title => {
   return `Оголошення \*${normalize(
     title
-  )}* опубліковано.\nСподіваємось скоро досягнете своєї мети.\nДякуємо за довіру!`;
+  )}* опубліковано у @kypiprodaiukraine\nСподіваємось скоро досягнете своєї мети.\nДякуємо за довіру!`;
 };
 
 // parse_mode: 'MarkdownV2',
