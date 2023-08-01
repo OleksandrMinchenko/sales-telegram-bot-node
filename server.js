@@ -3,7 +3,6 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
-const { checkContent } = require('./helpers/checkContentWords');
 
 const { notifyRoutes } = require('./routes/notifyRoute');
 const {
@@ -12,7 +11,6 @@ const {
 } = require('./middlewares/parseStringMiddleware');
 const {
   myFirstMsg,
-  mySecondMsg,
   mySuccessMsg,
   myBuyMsg,
   mySaleMsg,
@@ -277,21 +275,3 @@ app.use('/', (req, res) => {
   const pathToHomePage = path.join(__dirname, 'index.html');
   res.sendFile(pathToHomePage);
 });
-
-const arr = [
-  "Шприц 2 мл",
-  "Шприц 20 мл",
-  "Luer taper",
-  "Insulin",
-  "Medicine",
-  "insulin pen",
-  "Hypodermic needle",
-  "",
-  "Шприц инъекционный одноразового применения Medicare трехкомпонент. 5 мл с иглой",
-  "Retractable Tech Inc VanishPoint Tuberculin Syringes VanishPoint Tuberculin Syringe 1 mL 10151",
-  "Pharmacy",
-  "Catheter",
-  "Intramuscular injection"
-];
-
-console.log(checkContent(arr));

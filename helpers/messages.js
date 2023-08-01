@@ -9,10 +9,6 @@ const myFirstMsg = () => {
   return 'Щоб відкрити додаток треба\n*натиснути на кнопку внизу зліва*';
 };
 
-const mySecondMsg = () => {
-  return 'Всі мої можливості містяться у веб додатку,\n*який відкривається кнопкою внизу зліва*';
-};
-
 // parse_mode: 'Markdown',
 const mySuccessMsg = title => {
   return `Оголошення \*${normalize(
@@ -45,7 +41,6 @@ const myFailMsg = () => {
 
 module.exports = {
   myFirstMsg,
-  mySecondMsg,
   mySuccessMsg,
   myBuyMsg,
   mySaleMsg,

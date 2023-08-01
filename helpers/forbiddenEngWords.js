@@ -4,7 +4,6 @@ const drags = [
   /\btravka\b/gim,
   /\btravk\b/gim,
 
-
   /\bProhibited\b/gim,
   /\bHerb\b/gim,
   /\bHemp\b/gim,
@@ -13,6 +12,12 @@ const drags = [
   /\bsalt\b/gim,
   /\bPowder\b/gim,
   /\bintoxication\b/gim,
+  /\btrava\b/gim,
+  /\btravy\b/gim,
+  /\btrave\b/gim,
+  /\btravu\b/gim,
+  /\btravoy\b/gim,
+  /\btrave\b/gim,
   // /\bНаркотики\b/gim,
   // /\bНаркомания\b/gim,
   // /\bЛекарства\b/gim,
