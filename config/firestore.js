@@ -4,7 +4,7 @@ require('dotenv').config();
 
 const db = new Firestore({
   credentials: STORAGE_PROJECT_KEY,
-  projectId: process.env.PROJECT_ID_BUCKET,
+  projectId: process.env.PROJECT_ID,
 });
 
 module.exports = { db };
