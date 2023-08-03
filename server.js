@@ -45,25 +45,6 @@ app.listen(PORT, () => {
 const token = process.env.TOKEN;
 const channelId = process.env.CHANNEL_ID;
 
-// const urlNode = process.env.URL_NODE;
-// check
-// console.log(
-//   'check ===>',
-//   `https://api.telegram.org/bot${token}/getWebhookInfo`
-// );
-
-// set
-// console.log(
-//   'activate ===>',
-//   `https://api.telegram.org/bot${token}/setWebhook?url=${urlNode}`
-// );
-
-// remove
-// console.log(
-//   'activate ===>',
-//   `https://api.telegram.org/bot${token}/setWebhook`
-// );
-
 const bot = new TelegramBot(token, { polling: true });
 
 bot.on('message', async msg => {

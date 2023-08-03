@@ -23,6 +23,6 @@ const gc = new Storage({
 });
 
 // check connect to bucket
-gc.getBuckets().then(x => console.log(x));
+// gc.getBuckets().then(x => console.log(x));
 
 module.exports = { gc, STORAGE_PROJECT_KEY };
