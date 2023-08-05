@@ -18,6 +18,8 @@ const drags = [
   /\btravu\b/gim,
   /\btravoy\b/gim,
   /\btrave\b/gim,
+  /\bkoks\b/gim,
+  /\bkocs\b/gim,
   // /\bНаркотики\b/gim,
   // /\bНаркомания\b/gim,
   // /\bЛекарства\b/gim,

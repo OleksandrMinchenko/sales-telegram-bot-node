@@ -30,13 +30,13 @@ My project runs on two servers:
 
 1. To start the Render server, a docker file has already been added to the project, so all that remains is to create a new application on the site:
 
-![App Screenshot](https://i.ibb.co/Qmrhxbv/2023-08-03-23-54-50.png)
+- ![App Screenshot](https://i.ibb.co/Qmrhxbv/2023-08-03-23-54-50.png)
 
 connect the repository so that the code is automatically updated:
-![App Screenshot](https://i.ibb.co/20zH1JD/2023-08-03-23-55-34.png)
+- ![App Screenshot](https://i.ibb.co/20zH1JD/2023-08-03-23-55-34.png)
 
 and add secret keys:
-![App Screenshot](https://i.ibb.co/Qp7RyVH/2023-08-03-23-59-07.png)
+- ![App Screenshot](https://i.ibb.co/Qp7RyVH/2023-08-03-23-59-07.png)
 
 
 ```bash
@@ -72,7 +72,7 @@ UNIVERSE_DOMAIN=googleapis.com
 ![App Screenshot](https://i.ibb.co/XJKSB6n/2023-08-04-00-25-06.png)
 - You need to add the bot to the channel with administrator rights.
 - [To get the channel ID](https://github.com/GabrielRF/telegram-id#web-channel-id), you need to create a link `https://api.telegram.org/bot<token>/sendMessage?chat_id=<channel_name>&text=helo_my_friends` from the bot token and name channel then send it in the browser. Information will be returned:
-![App Screenshot](https://i.ibb.co/9t1JRYK/2023-08-04-00-28-27.png)
+- ![App Screenshot](https://i.ibb.co/9t1JRYK/2023-08-04-00-28-27.png)
 
 
 **GOOGLE SERVICES**
@@ -89,19 +89,19 @@ First, you need to create a project and add a payment card to it, otherwise ther
 
 - сreate a set of keys for future connections to Google Cloud:
 
-![App Screenshot](https://i.ibb.co/J2wB04Y/2023-08-04-00-40-45.png)
+- ![App Screenshot](https://i.ibb.co/J2wB04Y/2023-08-04-00-40-45.png)
 
-![App Screenshot](https://i.ibb.co/r4xDT6G/2023-08-04-00-43-06.png)
+- ![App Screenshot](https://i.ibb.co/r4xDT6G/2023-08-04-00-43-06.png)
 
-![App Screenshot](https://i.ibb.co/frbMcqj/2023-08-04-00-46-30.png)
+- ![App Screenshot](https://i.ibb.co/frbMcqj/2023-08-04-00-46-30.png)
 
-![App Screenshot](https://i.ibb.co/XFT0ntx/2023-08-04-00-48-28.png)
+- ![App Screenshot](https://i.ibb.co/XFT0ntx/2023-08-04-00-48-28.png)
 
-![App Screenshot](https://i.ibb.co/zrSZrSh/2023-08-04-00-52-52.png)
+- ![App Screenshot](https://i.ibb.co/zrSZrSh/2023-08-04-00-52-52.png)
 
 - Then create a bucket for storing photos. We only need it for a couple of minutes as a transit point.
 
-![App Screenshot](https://i.ibb.co/DVqTd6f/2023-08-04-00-55-21.png)
+- ![App Screenshot](https://i.ibb.co/DVqTd6f/2023-08-04-00-55-21.png)
 
 - fill out the creation form (payment card must be attached):
 ```bash
@@ -110,18 +110,19 @@ First, you need to create a project and add a payment card to it, otherwise ther
 BUCKET_NAME=photo-for-sales-chanel
 
 ```
-![App Screenshot](https://i.ibb.co/yQJQkXn/2023-08-04-00-58-53.png)
+- ![App Screenshot](https://i.ibb.co/yQJQkXn/2023-08-04-00-58-53.png)
 
 - make public access:
-![App Screenshot](https://i.ibb.co/j3MhDdJ/2023-08-04-01-01-56.png)
+- ![App Screenshot](https://i.ibb.co/gTHp0nB/2023-08-05-18-12-37.png)
+- ![App Screenshot](https://i.ibb.co/gw2t3bx/2023-08-05-18-15-50.png)
 
-![App Screenshot](https://i.ibb.co/fr0Fq4N/2023-08-04-01-01-29.png)
+
 
 - add a rule to automatically delete photos:
 ![App Screenshot](https://i.ibb.co/n7vtCfK/2023-08-04-01-05-18.png)
 
 - Firebase is needed to store announcements from clients in the database for further analysis by the administrator. Choose a plan and server location. Then the database will be connected to the previous keys
-![App Screenshot](https://i.ibb.co/wKCbz1x/2023-08-04-01-19-13.png)
+- ![App Screenshot](https://i.ibb.co/wKCbz1x/2023-08-04-01-19-13.png)
 
 2. To deploy on the [APP Engine](https://levelup.gitconnected.com/how-to-deploy-your-node-js-app-with-google-2cd3771d5b21), you need to create another file `app.yaml` with secret keys and add the Google Cloud package manager
 
@@ -158,7 +159,7 @@ env_variables:
 
 - create project on APP Engine, choose server:
 
-![App Screenshot](https://i.ibb.co/KLgLsjF/2023-08-04-01-34-21.png)
+- ![App Screenshot](https://i.ibb.co/KLgLsjF/2023-08-04-01-34-21.png)
 
 - [video manual](https://www.youtube.com/watch?v=HgpCjChgjoQ&ab_channel=DavidWeiss)
 

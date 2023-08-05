@@ -17,12 +17,11 @@ const STORAGE_PROJECT_KEY = {
 };
 
 const gc = new Storage({
-  //   keyFilename: path.join(__dirname, './telegram-bot-keys.json'),
   credentials: STORAGE_PROJECT_KEY,
   projectId: process.env.PROJECT_ID,
 });
 
 // check connect to bucket
-// gc.getBuckets().then(x => console.log(x));
+gc.getBuckets().then(x => console.log(x));
 
 module.exports = { gc, STORAGE_PROJECT_KEY };
