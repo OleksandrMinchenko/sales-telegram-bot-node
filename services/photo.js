@@ -17,7 +17,7 @@ const checkOnePhotoSendCloud = async (req, res, next) => {
   }
 };
 
-const checkSomePhotosSendCloud = async (req, res) => {
+const checkSomePhotosSendCloud = async (req, res, next) => {
   const arrayPhotos = req.files;
   try {
     const unresolvedPromises = arrayPhotos.map(async item => {
@@ -38,7 +38,7 @@ const checkSomePhotosSendCloud = async (req, res) => {
   }
 };
 
-const checkSomePhotosSendCloudByAdmin = async (req, res) => {
+const checkSomePhotosSendCloudByAdmin = async (req, res, next) => {
   const arrayPhotos = req.files;
   try {
     const unresolvedPromises = arrayPhotos.map(async item => {
