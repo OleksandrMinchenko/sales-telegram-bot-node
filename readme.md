@@ -121,6 +121,12 @@ BUCKET_NAME=photo-for-sales-chanel
 - add a rule to automatically delete photos:
 ![App Screenshot](https://i.ibb.co/n7vtCfK/2023-08-04-01-05-18.png)
 
+**Errors**
+- if an error appears in the console related to the permission to view the bucket, then it must be created in manual mode
+- ![App Screenshot](https://i.ibb.co/hFHFpKL/2023-08-05-20-30-29.png)
+- ![App Screenshot](https://i.ibb.co/mqprVnK/2023-08-05-20-31-18.png)
+
+
 - Firebase is needed to store announcements from clients in the database for further analysis by the administrator. Choose a plan and server location. Then the database will be connected to the previous keys
 - ![App Screenshot](https://i.ibb.co/wKCbz1x/2023-08-04-01-19-13.png)
 
