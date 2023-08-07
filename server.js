@@ -105,29 +105,33 @@ app.post('/web-data-sale', async (req, res) => {
 
     const time = await writeToDb(dataForDb);
 
-    await bot.answerWebAppQuery(queryId, {
-      type: 'article',
-      id: queryId,
-      title: 'Оголошення опубліковано',
-      input_message_content: {
-        message_text: mySuccessMsg(title),
-        parse_mode: 'Markdown',
-      },
-    });
+    if (queryId) {
+      await bot.answerWebAppQuery(queryId, {
+        type: 'article',
+        id: queryId,
+        title: 'Оголошення опубліковано',
+        input_message_content: {
+          message_text: mySuccessMsg(title),
+          parse_mode: 'Markdown',
+        },
+      });
+    }
 
     res
       .status(200)
       .send({ ...req.body, sendToTelegram: arrayPhoto, sendToDb: time });
   } catch (error) {
-    await bot.answerWebAppQuery(queryId, {
-      type: 'article',
-      id: queryId,
-      title: 'Не вийшло відправити оголошення',
-      input_message_content: {
-        message_text: myFailMsg(),
-        parse_mode: 'Markdown',
-      },
-    });
+    if (queryId) {
+      await bot.answerWebAppQuery(queryId, {
+        type: 'article',
+        id: queryId,
+        title: 'Не вийшло відправити оголошення',
+        input_message_content: {
+          message_text: myFailMsg(),
+          parse_mode: 'Markdown',
+        },
+      });
+    }
 
     res.status(500).send({ error });
   }
@@ -164,9 +168,11 @@ app.post('/web-data-buy', async (req, res) => {
       });
     }
 
-    res
-      .status(200)
-      .send({ ...req.body, sendToTelegram: myBuyMsg(title, description, contact), sendToDb: time });
+    res.status(200).send({
+      ...req.body,
+      sendToTelegram: myBuyMsg(title, description, contact),
+      sendToDb: time,
+    });
   } catch (error) {
     if (queryId) {
       await bot.answerWebAppQuery(queryId, {
