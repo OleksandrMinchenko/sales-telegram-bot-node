@@ -166,7 +166,7 @@ app.post('/web-data-buy', async (req, res) => {
 
     res
       .status(200)
-      .send({ ...req.body, sendToTelegram: myMessage, sendToDb: time });
+      .send({ ...req.body, sendToTelegram: myBuyMsg(title, description, contact), sendToDb: time });
   } catch (error) {
     if (queryId) {
       await bot.answerWebAppQuery(queryId, {
