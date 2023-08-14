@@ -5,7 +5,7 @@ const path = require('path');
 require('dotenv').config();
 
 const { notifyRoutes } = require('./routes/notifyRoute');
-const { paymentRoute } = require('./routes/paymentRoute');
+const { paymentRoutes } = require('./routes/paymentRoute');
 const {
   parseSymbols,
   parseSymbolsAndNormalize,
@@ -34,7 +34,7 @@ app.use((err, req, res, next) => {
   next();
 });
 
-app.use('/', paymentRoute);
+app.use('/', paymentRoutes);
 app.use('/check-photo', notifyRoutes);
 
 const PORT = process.env.PORT || 3000;
@@ -264,7 +264,7 @@ app.post('/web-data-admin', async (req, res) => {
   }
 });
 
-app.use('/', (req, res) => {
+app.use('/routes', (req, res) => {
   const pathToHomePage = path.join(__dirname, 'index.html');
   res.sendFile(pathToHomePage);
 });
