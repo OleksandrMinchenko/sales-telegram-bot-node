@@ -5,6 +5,7 @@ const path = require('path');
 require('dotenv').config();
 
 const { notifyRoutes } = require('./routes/notifyRoute');
+const { paymentRoute } = require('./routes/paymentRoute');
 const {
   parseSymbols,
   parseSymbolsAndNormalize,
@@ -33,6 +34,7 @@ app.use((err, req, res, next) => {
   next();
 });
 
+app.use('/', paymentRoute);
 app.use('/check-photo', notifyRoutes);
 
 const PORT = process.env.PORT || 3000;
