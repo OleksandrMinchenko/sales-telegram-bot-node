@@ -35,11 +35,6 @@ app.use((err, req, res, next) => {
 
 app.use('/check-photo', notifyRoutes);
 
-app.use('/', (req, res) => {
-  const pathToHomePage = path.join(__dirname, 'index.html');
-  res.sendFile(pathToHomePage);
-});
-
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
@@ -250,4 +245,9 @@ app.post('/web-data-admin', async (req, res) => {
 
     res.status(500).send({ error });
   }
+});
+
+app.use('/', (req, res) => {
+  const pathToHomePage = path.join(__dirname, 'index.html');
+  res.sendFile(pathToHomePage);
 });
