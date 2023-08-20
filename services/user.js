@@ -1,13 +1,17 @@
 // https://cloud.google.com/firestore/docs/create-database-server-client-library?_ga=2.122427979.-1971520172.1684677818
 // https://cloud.google.com/firestore/docs/query-data/queries
 require('dotenv').config();
-const collection = process.env.COLLECTION
+const collection = process.env.COLLECTION;
 
 const { Timestamp } = require('@google-cloud/firestore');
 const { db } = require('../config/firestore');
 
 const writeToDb = async data => {
   const uniqueId = Date.now().toString();
+
+  if (!data.user) {
+    data.user = 'anonym';
+  }
 
   const userRef = db
     .collection(collection)
