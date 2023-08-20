@@ -5,7 +5,6 @@ const path = require('path');
 require('dotenv').config();
 
 const { notifyRoutes } = require('./routes/notifyRoute');
-const { paymentRoutes } = require('./routes/paymentRoute');
 const {
   parseSymbols,
   parseSymbolsAndNormalize,
@@ -34,8 +33,12 @@ app.use((err, req, res, next) => {
   next();
 });
 
-app.use('/', paymentRoutes);
 app.use('/check-photo', notifyRoutes);
+
+app.use('/', (req, res) => {
+  const pathToHomePage = path.join(__dirname, 'index.html');
+  res.sendFile(pathToHomePage);
+});
 
 const PORT = process.env.PORT || 3000;
 
@@ -93,7 +96,10 @@ app.post('/web-data-sale', async (req, res) => {
   try {
     await bot.sendMediaGroup(channelId, arrayPhoto);
 
-    const time = await writeToDb(req.body);
+    const time = await writeToDb({
+      ...req.body,
+      payment: payment ? payment : false,
+    });
 
     if (queryId) {
       await bot.answerWebAppQuery(queryId, {
@@ -135,7 +141,10 @@ app.post('/web-data-buy', async (req, res) => {
       parse_mode: 'MarkdownV2',
     });
 
-    const time = await writeToDb(req.body);
+    const time = await writeToDb({
+      ...req.body,
+      payment: payment ? payment : false,
+    });
 
     if (queryId) {
       await bot.answerWebAppQuery(queryId, {
@@ -241,9 +250,4 @@ app.post('/web-data-admin', async (req, res) => {
 
     res.status(500).send({ error });
   }
-});
-
-app.use('/routes', (req, res) => {
-  const pathToHomePage = path.join(__dirname, 'index.html');
-  res.sendFile(pathToHomePage);
 });
