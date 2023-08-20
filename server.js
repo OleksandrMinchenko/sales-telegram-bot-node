@@ -73,32 +73,7 @@ bot.on('webhook_error', error => {
 });
 
 app.post('/web-data-sale', async (req, res) => {
-  const {
-    title,
-    description,
-    cost,
-    contact,
-    // user,
-    queryId,
-    photoURL,
-    // type,
-    // payment,
-    // order_id,
-    // payment_id,
-  } = req.body;
-
-  // const dataForDb = {
-  //   user: user ? user : 'anonym',
-  //   title,
-  //   description,
-  //   cost,
-  //   contact,
-  //   photoURL,
-  //   type,
-  //   payment,
-  //   order_id,
-  //   payment_id,
-  // };
+  const { title, description, cost, contact, queryId, photoURL } = req.body;
 
   const arrayPhoto = photoURL.map((item, index) => {
     if (index === 0) {
@@ -153,23 +128,14 @@ app.post('/web-data-sale', async (req, res) => {
 });
 
 app.post('/web-data-buy', async (req, res) => {
-  const { title, description, contact, user, queryId } = req.body;
-
-  const dataForDb = {
-    user: user ? user : 'anonym',
-    title,
-    description,
-    contact,
-    type: 'buy',
-    payment: false,
-  };
+  const { title, description, contact, queryId } = req.body;
 
   try {
     await bot.sendMessage(channelId, myBuyMsg(title, description, contact), {
       parse_mode: 'MarkdownV2',
     });
 
-    const time = await writeToDb(dataForDb);
+    const time = await writeToDb(req.body);
 
     if (queryId) {
       await bot.answerWebAppQuery(queryId, {
