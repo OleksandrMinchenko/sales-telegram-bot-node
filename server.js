@@ -73,19 +73,32 @@ bot.on('webhook_error', error => {
 });
 
 app.post('/web-data-sale', async (req, res) => {
-  const { title, description, cost, contact, user, queryId, photoURL } =
-    req.body;
-
-  const dataForDb = {
-    user: user ? user : 'anonym',
+  const {
     title,
     description,
     cost,
     contact,
+    // user,
+    queryId,
     photoURL,
-    type: 'sale',
-    payment: false,
-  };
+    // type,
+    // payment,
+    // order_id,
+    // payment_id,
+  } = req.body;
+
+  // const dataForDb = {
+  //   user: user ? user : 'anonym',
+  //   title,
+  //   description,
+  //   cost,
+  //   contact,
+  //   photoURL,
+  //   type,
+  //   payment,
+  //   order_id,
+  //   payment_id,
+  // };
 
   const arrayPhoto = photoURL.map((item, index) => {
     if (index === 0) {
@@ -105,7 +118,7 @@ app.post('/web-data-sale', async (req, res) => {
   try {
     await bot.sendMediaGroup(channelId, arrayPhoto);
 
-    const time = await writeToDb(dataForDb);
+    const time = await writeToDb(req.body);
 
     if (queryId) {
       await bot.answerWebAppQuery(queryId, {
