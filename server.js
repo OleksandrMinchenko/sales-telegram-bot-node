@@ -71,7 +71,8 @@ bot.on('webhook_error', error => {
 });
 
 app.post('/web-data-sale', async (req, res) => {
-  const { title, description, cost, contact, queryId, photoURL } = req.body;
+  const { title, description, cost, contact, queryId, photoURL, payment } =
+    req.body;
 
   const arrayPhoto = photoURL.map((item, index) => {
     if (index === 0) {
@@ -129,7 +130,7 @@ app.post('/web-data-sale', async (req, res) => {
 });
 
 app.post('/web-data-buy', async (req, res) => {
-  const { title, description, contact, queryId } = req.body;
+  const { title, description, contact, queryId, payment } = req.body;
 
   try {
     await bot.sendMessage(channelId, myBuyMsg(title, description, contact), {
