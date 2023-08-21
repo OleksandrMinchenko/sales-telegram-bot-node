@@ -193,62 +193,65 @@ app.post('/web-data-admin', async (req, res) => {
     payment,
   } = req.body;
 
-  const dataForDb = {
-    user: user ? user : 'anonym',
-    title,
-    description,
-    cost,
-    contact,
-    photoURL,
-    type,
-    payment,
-  };
-  console.log('inside /web-data-admin - dataForDb =====>>>>> ', dataForDb);
+  console.log('/web-data-admin', req.body);
+  res.status(200).send({ ...req.body });
 
-  // написати умову в залежності від типу оголошення формувати різне повідомлення. З фото і без
+  // const dataForDb = {
+  //   user: user ? user : 'anonym',
+  //   title,
+  //   description,
+  //   cost,
+  //   contact,
+  //   photoURL,
+  //   type,
+  //   payment,
+  // };
+  // console.log('inside /web-data-admin - dataForDb =====>>>>> ', dataForDb);
 
-  const myCaption = `\*${parseSymbolsAndNormalize(
-    title
-  )}*\n\*Опис:* ${parseSymbolsAndNormalize(
-    description
-  )}\n\*Ціна:* ${cost} грн\n\*Зв'язок:* ${parseSymbols(contact)}`;
+  // // написати умову в залежності від типу оголошення формувати різне повідомлення. З фото і без
 
-  const arrayPhoto = photoURL.map((item, index) => {
-    if (index === 0) {
-      return {
-        type: 'photo',
-        media: photoURL[index],
-        caption: myCaption,
-        parse_mode: 'MarkdownV2',
-      };
-    }
+  // const myCaption = `\*${parseSymbolsAndNormalize(
+  //   title
+  // )}*\n\*Опис:* ${parseSymbolsAndNormalize(
+  //   description
+  // )}\n\*Ціна:* ${cost} грн\n\*Зв'язок:* ${parseSymbols(contact)}`;
 
-    return {
-      type: 'photo',
-      media: photoURL[index],
-    };
-  });
+  // const arrayPhoto = photoURL.map((item, index) => {
+  //   if (index === 0) {
+  //     return {
+  //       type: 'photo',
+  //       media: photoURL[index],
+  //       caption: myCaption,
+  //       parse_mode: 'MarkdownV2',
+  //     };
+  //   }
 
-  try {
-    await bot.sendMediaGroup(channelId, arrayPhoto);
+  //   return {
+  //     type: 'photo',
+  //     media: photoURL[index],
+  //   };
+  // });
 
-    const time = await writeToDb(dataForDb);
+  // try {
+  //   await bot.sendMediaGroup(channelId, arrayPhoto);
 
-    res
-      .status(200)
-      .send({ ...req.body, sendToTelegram: arrayPhoto, sendToDb: time });
-  } catch (error) {
-    await bot.answerWebAppQuery(queryId, {
-      type: 'article',
-      id: queryId,
-      title: 'Не вийшло відправити оголошення',
-      input_message_content: {
-        message_text: `Не вийшло відправити оголошення, спробуйте знову`,
-      },
-    });
+  //   const time = await writeToDb(dataForDb);
 
-    res.status(500).send({ error });
-  }
+  //   res
+  //     .status(200)
+  //     .send({ ...req.body, sendToTelegram: arrayPhoto, sendToDb: time });
+  // } catch (error) {
+  //   await bot.answerWebAppQuery(queryId, {
+  //     type: 'article',
+  //     id: queryId,
+  //     title: 'Не вийшло відправити оголошення',
+  //     input_message_content: {
+  //       message_text: `Не вийшло відправити оголошення, спробуйте знову`,
+  //     },
+  //   });
+
+  // res.status(500).send({ error });
+  // }
 });
 
 app.use('/', (req, res) => {
