@@ -43,7 +43,7 @@ const somePhotosSendCloudByAdmin = async (req, res, next) => {
   try {
     const unresolvedPromises = arrayPhotos.map(async item => {
       const imageUrl = await uploadImage(item);
-      return imageUrl;
+      return { imageUrl };
     });
 
     const result = await Promise.all(unresolvedPromises);
