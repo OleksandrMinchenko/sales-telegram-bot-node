@@ -57,8 +57,23 @@ const checkSomePhotosSendCloudByAdmin = async (req, res, next) => {
   }
 };
 
+const checkOnePhotosSendCloudByAdmin = async (req, res, next) => {
+  const myFile = req.file;
+  try {
+    const imageUrl = await uploadImage(myFile);
+
+    res.send({
+      status: 'Upload was successful',
+      imageUrl,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   checkOnePhotoSendCloud,
   checkSomePhotosSendCloud,
   checkSomePhotosSendCloudByAdmin,
+  checkOnePhotosSendCloudByAdmin,
 };
