@@ -9,6 +9,9 @@ const {
   parseSymbols,
   parseSymbolsAndNormalize,
 } = require('./middlewares/parseStringMiddleware');
+const { decode, encode } = require('./helpers/cryptHashing');
+// decode('cat'); //////// =<<<<<<<<<<<<<<<<<<
+// encode('eyJhbGciOiJIUzI1NiJ9.Y2F0.JyKJCzCuj2pIQiHORJhcBIJ0ywmKt5olSY6OwuV_un4'); //////// =<<<<<<<<<<<<<<<<<<
 const {
   myFirstMsg,
   mySuccessMsg,
