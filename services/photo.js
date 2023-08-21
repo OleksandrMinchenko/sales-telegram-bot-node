@@ -21,9 +21,9 @@ const checkSomePhotosSendCloud = async (req, res, next) => {
   const arrayPhotos = req.files;
   try {
     const unresolvedPromises = arrayPhotos.map(async item => {
-      const imageUrl = await uploadImage(item);
+      const imageURL = await uploadImage(item);
 
-      const checkImageContent = visionCheck(imageUrl);
+      const checkImageContent = visionCheck(imageURL);
       return checkImageContent;
     });
 
@@ -42,8 +42,8 @@ const somePhotosSendCloudByAdmin = async (req, res, next) => {
   const arrayPhotos = req.files;
   try {
     const unresolvedPromises = arrayPhotos.map(async item => {
-      const imageUrl = await uploadImage(item);
-      return { imageUrl };
+      const imageURL = await uploadImage(item);
+      return { imageURL };
     });
 
     const result = await Promise.all(unresolvedPromises);
@@ -60,11 +60,11 @@ const somePhotosSendCloudByAdmin = async (req, res, next) => {
 const onePhotosSendCloudByAdmin = async (req, res, next) => {
   const myFile = req.file;
   try {
-    const imageUrl = await uploadImage(myFile);
+    const imageURL = await uploadImage(myFile);
 
     res.send({
       status: 'Upload was successful',
-      result: { imageUrl },
+      result: { imageURL },
     });
   } catch (error) {
     next(error);
