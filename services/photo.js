@@ -6,11 +6,11 @@ const checkOnePhotoSendCloud = async (req, res, next) => {
   try {
     const imageUrl = await uploadImage(myFile);
 
-    const checkImageContent = await visionCheck(imageUrl);
+    const result = await visionCheck(imageUrl);
 
     res.send({
       status: 'Upload was successful',
-      resultCheck: checkImageContent,
+      result,
     });
   } catch (error) {
     next(error);
@@ -64,7 +64,7 @@ const onePhotosSendCloudByAdmin = async (req, res, next) => {
 
     res.send({
       status: 'Upload was successful',
-      resultCheck: imageUrl,
+      result: { imageUrl },
     });
   } catch (error) {
     next(error);
