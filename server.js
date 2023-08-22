@@ -183,13 +183,11 @@ app.post('/web-data-buy', async (req, res) => {
 app.post('/web-data-admin', async (req, res) => {
   const { title, description, cost, contact, queryId, photoURL, type } =
     req.body;
-  console.log('photoURL', photoURL);
-  console.log(typeof photoURL);
 
-  if (type === 'sale' && !photoURL) {
+  if (type === 'sale' && (photoURL === undefined || cost === undefined)) {
     res
       .status(500)
-      .send({ error: 'Потрібні фотографії для такого оголошення' });
+      .send({ error: 'Потрібні фотографії для такого оголошення і вартість' });
   }
 
   if (type === 'sale' && photoURL.length > 0) {
