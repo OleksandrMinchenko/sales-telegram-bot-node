@@ -181,77 +181,99 @@ app.post('/web-data-buy', async (req, res) => {
 
 // адмінські супер можливості
 app.post('/web-data-admin', async (req, res) => {
-  const {
-    title,
-    description,
-    cost,
-    contact,
-    user,
-    queryId,
-    photoURL,
-    type,
-    payment,
-  } = req.body;
+  const { title, description, cost, contact, queryId, photoURL, type } =
+    req.body;
 
-  console.log('/web-data-admin', req.body);
-  res.status(200).send({ ...req.body });
+  if (type === 'sale') {
+    const myCaption = `\*${parseSymbolsAndNormalize(
+      title
+    )}*\n\*Опис:* ${parseSymbolsAndNormalize(
+      description
+    )}\n\*Ціна:* ${cost} грн\n\*Зв'язок:* ${parseSymbols(contact)}`;
 
-  // const dataForDb = {
-  //   user: user ? user : 'anonym',
-  //   title,
-  //   description,
-  //   cost,
-  //   contact,
-  //   photoURL,
-  //   type,
-  //   payment,
-  // };
-  // console.log('inside /web-data-admin - dataForDb =====>>>>> ', dataForDb);
+    const arrayPhoto = photoURL.map((item, index) => {
+      if (index === 0) {
+        return {
+          type: 'photo',
+          media: photoURL[index],
+          caption: myCaption,
+          parse_mode: 'MarkdownV2',
+        };
+      }
 
-  // // написати умову в залежності від типу оголошення формувати різне повідомлення. З фото і без
+      return {
+        type: 'photo',
+        media: photoURL[index],
+      };
+    });
 
-  // const myCaption = `\*${parseSymbolsAndNormalize(
-  //   title
-  // )}*\n\*Опис:* ${parseSymbolsAndNormalize(
-  //   description
-  // )}\n\*Ціна:* ${cost} грн\n\*Зв'язок:* ${parseSymbols(contact)}`;
+    try {
+      await bot.sendMediaGroup(channelId, arrayPhoto);
 
-  // const arrayPhoto = photoURL.map((item, index) => {
-  //   if (index === 0) {
-  //     return {
-  //       type: 'photo',
-  //       media: photoURL[index],
-  //       caption: myCaption,
-  //       parse_mode: 'MarkdownV2',
-  //     };
-  //   }
+      const time = await writeToDb({ ...req.body });
 
-  //   return {
-  //     type: 'photo',
-  //     media: photoURL[index],
-  //   };
-  // });
+      res
+        .status(200)
+        .send({ ...req.body, sendToTelegram: arrayPhoto, sendToDb: time });
+    } catch (error) {
+      if (queryId) {
+        await bot.answerWebAppQuery(queryId, {
+          type: 'article',
+          id: queryId,
+          title: 'Не вийшло відправити оголошення',
+          input_message_content: {
+            message_text: `Не вийшло відправити оголошення, спробуйте знову`,
+          },
+        });
+      }
 
-  // try {
-  //   await bot.sendMediaGroup(channelId, arrayPhoto);
+      res.status(500).send({ error });
+    }
+  }
 
-  //   const time = await writeToDb(dataForDb);
+  if (type === 'buy') {
+    try {
+      await bot.sendMessage(channelId, myBuyMsg(title, description, contact), {
+        parse_mode: 'MarkdownV2',
+      });
 
-  //   res
-  //     .status(200)
-  //     .send({ ...req.body, sendToTelegram: arrayPhoto, sendToDb: time });
-  // } catch (error) {
-  //   await bot.answerWebAppQuery(queryId, {
-  //     type: 'article',
-  //     id: queryId,
-  //     title: 'Не вийшло відправити оголошення',
-  //     input_message_content: {
-  //       message_text: `Не вийшло відправити оголошення, спробуйте знову`,
-  //     },
-  //   });
+      const time = await writeToDb({
+        ...req.body,
+      });
 
-  // res.status(500).send({ error });
-  // }
+      if (queryId) {
+        await bot.answerWebAppQuery(queryId, {
+          type: 'article',
+          id: queryId,
+          title: 'Оголошення опубліковано',
+          input_message_content: {
+            message_text: mySuccessMsg(title),
+            parse_mode: 'Markdown',
+          },
+        });
+      }
+
+      res.status(200).send({
+        ...req.body,
+        sendToTelegram: myBuyMsg(title, description, contact),
+        sendToDb: time,
+      });
+    } catch (error) {
+      if (queryId) {
+        await bot.answerWebAppQuery(queryId, {
+          type: 'article',
+          id: queryId,
+          title: 'Не вийшло відправити оголошення',
+          input_message_content: {
+            message_text: myFailMsg(),
+            parse_mode: 'Markdown',
+          },
+        });
+      }
+
+      res.status(500).send({ error });
+    }
+  }
 });
 
 app.use('/', (req, res) => {
