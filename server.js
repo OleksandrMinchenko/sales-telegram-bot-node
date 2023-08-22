@@ -184,7 +184,11 @@ app.post('/web-data-admin', async (req, res) => {
   const { title, description, cost, contact, queryId, photoURL, type } =
     req.body;
 
-  if (type === 'sale' && (photoURL === undefined || cost === undefined)) {
+  if (
+    (type === 'sale' && photoURL === undefined && cost === undefined) ||
+    (type === 'sale' && photoURL === undefined) ||
+    (type === 'sale' && cost === undefined)
+  ) {
     res.status(500).send({
       message: 'Потрібні фотографії для такого оголошення і вартість',
     });
