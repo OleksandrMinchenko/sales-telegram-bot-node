@@ -184,6 +184,12 @@ app.post('/web-data-admin', async (req, res) => {
   const { title, description, cost, contact, queryId, photoURL, type } =
     req.body;
 
+  if (type === 'sale' && !photoURL) {
+    res
+      .status(500)
+      .send({ error: 'Потрібні фотографії для такого оголошення' });
+  }
+
   if (type === 'sale' && photoURL.length > 0) {
     const myCaption = `\*${parseSymbolsAndNormalize(
       title
@@ -229,12 +235,6 @@ app.post('/web-data-admin', async (req, res) => {
 
       res.status(500).send({ error });
     }
-  }
-
-  if (type === 'sale' && !photoURL) {
-    res
-      .status(500)
-      .send({ error: 'Потрібні фотографії для такого оголошення' });
   }
 
   if (type === 'buy') {
