@@ -189,7 +189,7 @@ app.post('/web-data-admin', async (req, res) => {
     (type === 'sale' && photoURL === undefined) ||
     (type === 'sale' && cost === undefined)
   ) {
-    res.status(500).send({
+    return res.status(500).send({
       message: 'Потрібні фотографії для такого оголошення і вартість',
     });
   }
