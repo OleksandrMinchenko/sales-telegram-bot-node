@@ -73,6 +73,26 @@ bot.on('webhook_error', error => {
   console.log('bot_webhook_error', error.message);
 });
 
+bot.on('new_chat_members', async msg => {
+  const chatId = msg.chat.id;
+  const text = msg.text;
+
+  console.log(msg);
+
+  // if (msg.new_chat_member.username === me.username) {
+  console.log('join %s(%s)', msg.chat.title, msg.chat.id);
+  // }
+  // if (text === '/start') {
+  //   try {
+  //     await bot.sendMessage(chatId, myFirstMsg(), {
+  //       parse_mode: 'MarkdownV2',
+  //     });
+  //   } catch (error) {
+  //     console.log('/start sendMessage error ====== >', error);
+  //   }
+  // }
+});
+
 app.post('/web-data-sale', async (req, res) => {
   const { title, description, cost, contact, queryId, photoURL, payment } =
     req.body;
