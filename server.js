@@ -52,26 +52,27 @@ const channelId = process.env.CHANNEL_ID;
 const bot = new TelegramBot(token, { polling: true });
 // ========== test
 bot.on('new_chat_members', async msg => {
-  console.log('new_chat_members ====> msg ', msg);
+  console.log('new_chat_members - some ====> msg ', msg);
 });
 
 bot.on('chat_member', async msg => {
   console.log('chat_member ====> msg ', msg);
 });
 
+// =>
 bot.on('my_chat_member', async msg => {
-  console.log('my_chat_member ====> msg ', msg);
+  console.log('my_chat_member - one ====> msg ', msg);
 });
 
-bot.addListener('chat_member', listener => {
-  console.log('chat_member ', listener);
-});
+// bot.addListener('chat_member', listener => {
+//   console.log('chat_member ', listener);
+// });
 
-bot.addListener('my_chat_member', listener => {
-  console.log('my_chat_member', listener);
-});
+// bot.addListener('my_chat_member', listener => {
+//   console.log('my_chat_member', listener);
+// });
 
-app.get(async (req, res) => {
+app.get('/count-members-chat',async (req, res) => {
   const count = await bot.getChatMemberCount(channelId);
   console.log('count ', count);
 
