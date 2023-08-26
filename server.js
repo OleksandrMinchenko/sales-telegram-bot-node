@@ -51,17 +51,12 @@ const channelId = process.env.CHANNEL_ID;
 const bot = new TelegramBot(token, { polling: true });
 
 bot.on('my_chat_member', async msg => {
+  const { chat, from, date, old_chat_member, new_chat_member } = msg;
   console.log('my_chat_member ====> msg ', msg);
 
-  // записати в базу нового юзера що відкрив бота
-  // const { chat, from, date, old_chat_member, new_chat_member } = msg;
-  // writeUserToDb({
-  //   chat: 'ddd-3',
-  //   from: {},
-  //   date: {},
-  // });
-
-  writeUserToDb(msg);
+  if (new_chat_member.status === 'member') {
+    writeUserToDb(msg);
+  }
 });
 
 app.get('/count-members-chat', async (req, res) => {
