@@ -20,4 +20,6 @@ const db = new Firestore({
   projectId: process.env.PROJECT_ID,
 });
 
+// const { getFirestore, Timestamp, FieldValue, Filter } = require('firebase-admin/firestore');
+
 module.exports = { db };

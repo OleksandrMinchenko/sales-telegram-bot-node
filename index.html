@@ -7,12 +7,33 @@
   </head>
   <body>
     <h1>Привіт мій друже</h1>
-    
+
     Я маю маршрути:
     <ul>
-      <li>(post - form data) <b>/check-photo/one</b> перевіряє 1 фото на заборонений контент</li>
-      <li>(post - form data) <b>/check-photo/some</b> перевіряє 1-5 фото на заборонений контент</li>
-      <li>(post - form data) <b>/web-data</b> відправляє форму з даними у телеграм канал</li>
+      <li>
+        (post - form data) <b>/check-photo/one</b> перевіряє 1 фото на
+        заборонений контент
+      </li>
+      <li>
+        (post - form data) <b>/check-photo/some</b> перевіряє 1-5 фото на
+        заборонений контент
+      </li>
+      <li>
+        (post - form data) <b>/web-data-admin</b> відправляє форму з даними від
+        адміністратора у телеграм канал, немає перевірки контенту
+      </li>
+      <li>
+        (post - form data) <b>/web-data-sale</b> відправляє форму з даними
+        оголошення "Продам" у телеграм канал
+      </li>
+      <li>
+        (post - form data) <b>/web-data-buy</b> відправляє форму з даними
+        оголошення "Куплю" у телеграм канал
+      </li>
+      <li>
+        (get) <b>/count-members-chat</b> відправляє кількасть підписників у
+        телеграм каналі
+      </li>
     </ul>
   </body>
 </html>

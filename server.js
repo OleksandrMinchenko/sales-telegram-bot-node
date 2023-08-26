@@ -19,8 +19,7 @@ const {
   mySaleMsg,
   myFailMsg,
 } = require('./helpers/messages');
-const { writeToDb } = require('./services/user');
-const { log } = require('console');
+const { writeToDb, writeUserToDb } = require('./services/user');
 
 const app = express();
 
@@ -50,38 +49,30 @@ const token = process.env.TOKEN;
 const channelId = process.env.CHANNEL_ID;
 
 const bot = new TelegramBot(token, { polling: true });
-// ========== test
-bot.on('new_chat_members', async msg => {
-  console.log('new_chat_members - some ====> msg ', msg);
-});
 
-bot.on('chat_member', async msg => {
-  console.log('chat_member ====> msg ', msg);
-});
-
-// =>
 bot.on('my_chat_member', async msg => {
-  console.log('my_chat_member - one ====> msg ', msg);
+  console.log('my_chat_member ====> msg ', msg);
+
+  // записати в базу нового юзера що відкрив бота
+  // const { chat, from, date, old_chat_member, new_chat_member } = msg;
+  // writeUserToDb({
+  //   chat: 'ddd-3',
+  //   from: {},
+  //   date: {},
+  // });
+
+  writeUserToDb(msg);
 });
 
-// bot.addListener('chat_member', listener => {
-//   console.log('chat_member ', listener);
-// });
-
-// bot.addListener('my_chat_member', listener => {
-//   console.log('my_chat_member', listener);
-// });
-
-app.get('/count-members-chat',async (req, res) => {
+app.get('/count-members-chat', async (req, res) => {
   const count = await bot.getChatMemberCount(channelId);
-  console.log('count ', count);
 
   res.status(200).send({
     channelId,
     count,
   });
 });
-// ========== test
+
 bot.on('message', async msg => {
   const chatId = msg.chat.id;
   const text = msg.text;
