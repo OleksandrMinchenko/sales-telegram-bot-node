@@ -20,6 +20,7 @@ const {
   myFailMsg,
 } = require('./helpers/messages');
 const { writeToDb } = require('./services/user');
+const { log } = require('console');
 
 const app = express();
 
@@ -203,6 +204,7 @@ app.post('/web-data-buy', async (req, res) => {
 app.post('/web-data-admin', async (req, res) => {
   const { title, description, cost, contact, queryId, photoURL, type } =
     req.body;
+    console.log(req.body);
 
   if (
     (type === 'sale' && photoURL === undefined && cost === undefined) ||
