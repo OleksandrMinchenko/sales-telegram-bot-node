@@ -252,6 +252,7 @@ remove a certificate on your bot: `https://api.telegram.org/bot${token}/setWebho
 - [node-lemmatizer](https://www.npmjs.com/package/node-lemmatizer)
 - [Password hashing in Node.js with bcrypt](https://blog.logrocket.com/password-hashing-node-js-bcrypt/)
 - [listener 'new_chat_members'](https://github.com/telegraf/telegraf/discussions/1488)
+- [listener events](https://github.com/yagop/node-telegram-bot-api/blob/master/doc/usage.md#events)
 
 **parse string**
 - [corse error by special symbols](https://stackoverflow.com/questions/40626896/telegram-does-not-escape-some-markdown-characters)

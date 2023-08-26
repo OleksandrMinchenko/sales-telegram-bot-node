@@ -50,27 +50,37 @@ const token = process.env.TOKEN;
 const channelId = process.env.CHANNEL_ID;
 
 const bot = new TelegramBot(token, { polling: true });
+// ========== test
+bot.on('new_chat_members', async msg => {
+  console.log('new_chat_members ====> msg ', msg);
+});
 
-// bot.on('new_chat_members', async msg => {
-//   const chatId = msg.chat.id;
-//   const text = msg.text;
+bot.on('chat_member', async msg => {
+  console.log('chat_member ====> msg ', msg);
+});
 
-//   console.log('new_chat_members ====> msg ', msg);
+bot.on('my_chat_member', async msg => {
+  console.log('my_chat_member ====> msg ', msg);
+});
 
-//   // if (msg.new_chat_member.username === me.username) {
-//   console.log('join %s(%s)', msg.chat.title, msg.chat.id);
-//   // }
-//   // if (text === '/start') {
-//   //   try {
-//   //     await bot.sendMessage(chatId, myFirstMsg(), {
-//   //       parse_mode: 'MarkdownV2',
-//   //     });
-//   //   } catch (error) {
-//   //     console.log('/start sendMessage error ====== >', error);
-//   //   }
-//   // }
-// });
+bot.addListener('chat_member', listener => {
+  console.log('chat_member ', listener);
+});
 
+bot.addListener('my_chat_member', listener => {
+  console.log('my_chat_member', listener);
+});
+
+app.get(async (req, res) => {
+  const count = await bot.getChatMemberCount(channelId);
+  console.log('count ', count);
+
+  res.status(200).send({
+    channelId,
+    count,
+  });
+});
+// ========== test
 bot.on('message', async msg => {
   const chatId = msg.chat.id;
   const text = msg.text;
@@ -204,7 +214,7 @@ app.post('/web-data-buy', async (req, res) => {
 app.post('/web-data-admin', async (req, res) => {
   const { title, description, cost, contact, queryId, photoURL, type } =
     req.body;
-    console.log(req.body);
+  console.log(req.body);
 
   if (
     (type === 'sale' && photoURL === undefined && cost === undefined) ||
